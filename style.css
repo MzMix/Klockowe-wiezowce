@@ -1,0 +1,59 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #553D67;
+  font-family: 'Lato', sans-serif;
+  overflow: hidden;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
+}
+
+.header {
+  width: 100%;
+  background-color: #2F2FA2;
+  padding: 10px;
+  color: white;
+  font-size: 32px;
+  text-align: center;
+}
+
+.box {
+  width: 400px;
+  height: 400px;
+  margin-top: 75px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.name {
+  width: 100%;
+  background-color: #F64C72;
+  padding: 10px;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+}
+
+.footer {
+  width: 100%;
+  background-color: #2F2FA2;
+  padding-bottom: 20px;
+  padding-top: 10px;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+}
