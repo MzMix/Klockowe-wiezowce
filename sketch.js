@@ -52,7 +52,8 @@ let bound = [2, 3, 4, 5, 31, 32, 33, 34, 35, 7, 13, 19, 25, 12, 18, 24, 30, 18];
 
 let colors;
 const size = 65;
-let n = 1;
+let n = 1,
+    z;
 
 function setup() {
     let c = createCanvas(400, 400);
@@ -74,6 +75,7 @@ function setup() {
             n++;
         }
     }
+    z = true;
 }
 
 function draw() {
@@ -93,8 +95,10 @@ function draw() {
 
 }
 
-function mousePressed() {
+function mouseClicked() {
     for (s of segments) {
-        if (s.checkPointing()) s.increaseNum()
+        if (s.checkPointing()) {
+            s.increaseNum();
+        }
     }
 }
