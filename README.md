@@ -1,2 +1,4 @@
-# wiezowce
-Klockiem w matematykę! Klockowe wieżowce Wersja: 1.0 z dnia : 12.01.2019
+# Klockowe wieżowce
+Wolne i darmowe aplikacje webowe do pracy z klockami
+
+Aplikacja zbudowana z użyciem biblioteki p5.js
