@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #553D67;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Helvetica';
   overflow: hidden;
   -webkit-touch-callout: none;
   /* iOS Safari */
@@ -18,6 +18,9 @@ body {
   user-select: none;
   /* Non-prefixed version, currently
                                 supported by Chrome and Opera */
+
+  /* max-width: 1500px; */
+  /* min-width: 100px; */
 }
 
 .header {
@@ -29,12 +32,33 @@ body {
   text-align: center;
 }
 
+.menu {
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: transparent;
+  text-align: center;
+  color: white;
+  padding: 2px;
+}
+
+.btL,
+.btR,
+.sld {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+}
+
+.list {
+  padding: 5px;
+}
+
 .box {
-  width: 400px;
-  height: 400px;
-  margin-top: 75px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  min-height: 400px;
+  margin-top: 1px;
+  text-align: center;
 }
 
 .name {
@@ -49,8 +73,9 @@ body {
 .footer {
   width: 100%;
   background-color: #2F2FA2;
-  padding-bottom: 20px;
-  padding-top: 10px;
+  box-sizing: border-box;
+  padding-bottom: 10px;
+  padding-top: 5px;
   color: white;
   font-size: 16px;
   text-align: center;
