@@ -54,6 +54,10 @@ body {
   padding: 5px;
 }
 
+.list button {
+  margin-left: 5px;
+}
+
 .box {
   width: 100%;
   min-height: 400px;

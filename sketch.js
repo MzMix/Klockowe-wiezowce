@@ -101,11 +101,20 @@ function createMenu() {
     sel.changed(changeSet);
     select('.list').child(sel);
 
+    save = createButton('Zapis planszy do pliku');
+    save.mouseClicked(saveImg);
+    select('.list').child(save);
+
 }
 
 function resize() {
     size = skalar.value();
     resizeCanvas(size * 6, size * 6)
+}
+
+function saveImg() {
+    let data = new Date();
+    saveCanvas(`wiezowce-${data.getHours()}-${data.getMinutes()}-${data.getSeconds()}`, 'png');
 }
 
 function setup() {
