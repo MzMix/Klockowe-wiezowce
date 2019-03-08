@@ -74,9 +74,9 @@ function changeSet() {
 
     let type = sel.value();
 
-    if (type == "MoreToMath") {
+    if (type == "Zestaw 1") {
         colors = mtmColors
-    } else if (type == "Zestaw Kreatywny") {
+    } else if (type == "Zestaw 2") {
         colors = crColors;
     }
 }
@@ -96,8 +96,8 @@ function createMenu() {
     skalar.changed(resize);
 
     sel = createSelect();
-    sel.option('MoreToMath');
-    sel.option('Zestaw Kreatywny');
+    sel.option('Zestaw 1');
+    sel.option('Zestaw 2');
     sel.changed(changeSet);
     select('.list').child(sel);
 
