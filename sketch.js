@@ -47,6 +47,13 @@ function addMethodsToObjects() {
     Segment.prototype.basicStrokeColor = settings.squareStroke;
     Index.prototype.basicStrokeColor = settings.indexStroke;
 
+    Segment.prototype.updatePosition = function () {
+        this.pos = createVector(
+            this.iteratorIndex.x * settings.squareSize + settings.squareSpacer * this.iteratorIndex.x + 2,
+            this.iteratorIndex.y * settings.squareSize + settings.squareSpacer * this.iteratorIndex.y + 2
+        );
+    }
+
     Segment.prototype.retriveBasicValues = function () {
         this.changeContent();
     }
@@ -81,16 +88,36 @@ function addMethodsToObjects() {
             case 'changeSegmentSize':
                 select(".modal-title").html("Wielkość pól");
 
-                el = createSlider(settings.basicSquareSize / 2, settings.basicSquareSize * 2, settings.squareSize, 10)
+                el = createSlider(0.5, 1.5, settings.skalar, 0.10);
+                el.addClass("form-control-range");
+                el.attribute("id", "form-control-ranged")
                 el.changed(() => {
-                    let val = el.value();
-                    settings.squareSize = val;
-                    // settings.squareSpacer = val / 16;
-                    resizeCanvas();
+                    settings.skalar = el.value();
+
+                    settings.squareSize = settings.basicSquareSize * settings.skalar;
+                    settings.squareSpacer = settings.basicSquareSpacing * settings.skalar;
+
+                    let sizeW = settings.squareSize * (settings.squaresBySideW + 2) + 11 * settings.squareSpacer + 6;
+                    let sizeH = settings.squareSize * (settings.squaresBySideH + 2) + 11 * settings.squareSpacer + 6;
+                    resizeCanvas(sizeW, sizeH);
+
+                    for (let s of userInterface.board) {
+                        s.updatePosition();
+                    }
+
+                    select("#scaleP").html(`Skala: ${floor(settings.skalar * 100)}%`);
                 })
 
+                let label = createElement("label", "Zmień wielkość pól")
+                label.attribute("for", "form-control-range");
+
+                let p = createP(`Skala: ${floor(settings.skalar * 100)}%`);
+                p.attribute("id", "scaleP");
+
                 select(".modal-body").html("");
+                select(".modal-body").child(label);
                 select(".modal-body").child(el);
+                select(".modal-body").child(p);
 
                 break;
 
@@ -126,12 +153,11 @@ function addMethodsToObjects() {
 
     settings.addValues({
         segmentMaxNum: 5,
-        activeColorScheme: 0
+        activeColorScheme: 0,
+        skalar: 1
     })
 
-    userInterface.executeQueue = {
-        displayAxis: () => {}
-    }
+    userInterface.executeQueue = {}
 
     action.saveImg = function () {
         let data = new Date();
@@ -173,6 +199,7 @@ function setup() {
     }
 
     settings.basicSquareSize = settings.squareSize;
+    settings.basicSquareSpacing = settings.squareSpacer;
 
     noLoop();
 }
