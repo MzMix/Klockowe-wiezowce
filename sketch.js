@@ -52,16 +52,13 @@ function addMethodsToObjects() {
     }
 
     action.showModal = function (value) {
-        let el;
-
         switch (value) {
             case 'changeColorSet':
-
                 this.refreshColorSets();
 
                 select(".modal-title").html("Zestawy kolorów");
 
-                el = createSelect();
+                let el = createSelect();
                 el.option("Domyślny");
 
                 for (let i = 0; i < settings.colorSchemes.length - 1; i++) {
