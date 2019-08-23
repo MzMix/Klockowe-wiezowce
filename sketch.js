@@ -119,7 +119,7 @@ function addMethodsToObjects() {
         }
 
         for (let s of userInterface.board) {
-            s.changeColor(settings.colorSchemes[settings.activeColorScheme][s.txt - 1])
+            if (!(s instanceof Index)) s.changeColor(settings.colorSchemes[settings.activeColorScheme][s.txt - 1])
         }
 
     }
