@@ -52,13 +52,15 @@ function addMethodsToObjects() {
     }
 
     action.showModal = function (value) {
+        let el;
+
         switch (value) {
             case 'changeColorSet':
                 this.refreshColorSets();
 
                 select(".modal-title").html("Zestawy kolorów");
 
-                let el = createSelect();
+                el = createSelect();
                 el.option("Domyślny");
 
                 for (let i = 0; i < settings.colorSchemes.length - 1; i++) {
@@ -79,7 +81,7 @@ function addMethodsToObjects() {
             case 'changeSegmentSize':
                 select(".modal-title").html("Wielkość pól");
 
-                let el = createSlider(settings.basicSquareSize / 2, settings.basicSquareSize * 2, settings.squareSize, 10)
+                el = createSlider(settings.basicSquareSize / 2, settings.basicSquareSize * 2, settings.squareSize, 10)
                 el.changed(() => {
                     let val = el.value();
                     settings.squareSize = val;
