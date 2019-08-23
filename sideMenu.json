@@ -15,8 +15,8 @@
                 ["action.saveImg()"]
             ],
             "Dostosowywanie": [
-                ["Zestawy kolorów"],
-                ["action.showModal('changeColorSet')"]
+                ["Zestawy kolorów", "Zmiana wielkości pól"],
+                ["action.showModal('changeColorSet')", "action.showModal('changeSegmentSize')"]
             ]
         }
     }],

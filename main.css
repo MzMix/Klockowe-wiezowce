@@ -1,6 +1,10 @@
 /* Background pattern from Toptal Subtle Patterns */
 /* https://www.toptal.com/designers/subtlepatterns/faq/ */
 
+/* * {
+	border: 1px solid red;
+} */
+
 :root {
 	--sidebarWidth: 250px;
 	--sidebarFontSize: 1.5em;
@@ -47,11 +51,11 @@ body {
 }
 
 .top-buffer {
-	margin-top: 20px !important;
+	margin-top: 25px !important;
 }
 
 .noPadding {
-	padding: 0;
+	padding: 0 !important;
 }
 
 .canvasDiv {
