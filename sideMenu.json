@@ -1,0 +1,27 @@
+{
+    "header": [{
+        "type": "menuHeader",
+        "content": "Ustawienia aplikacji"
+    }],
+    "sideMenuContent": [{
+        "type": "menuContent",
+        "content": {
+            "Plansza": [
+                ["Reset planszy", "Reset opisów pól"],
+                ["action.resetBoard()", "action.resetIndex()"]
+            ],
+            "Udostępnianie": [
+                ["Zapis planszy do pliku"],
+                ["action.saveImg()"]
+            ],
+            "Dostosowywanie": [
+                ["Zestawy kolorów", "Zmiana wielkości pól"],
+                ["action.showModal('changeColorSet')", "action.showModal('changeSegmentSize')"]
+            ]
+        }
+    }],
+    "footer": [{
+        "type": "menuFooter",
+        "content": "<https://mzmix.github.io/>(Strona Główna)"
+    }]
+}

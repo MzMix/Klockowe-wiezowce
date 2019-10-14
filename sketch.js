@@ -1,167 +1,217 @@
-class Segment {
-    constructor(x, y, color, stat) {
-        this.x = x;
-        this.y = y;
-        this.color = color
-        this.stat = stat;
-        this.limit = 5;
-        this.num = 0;
+function addMethodsToObjects() {
+
+    UserInterface.prototype.checkBoardClicks = function () {
+        if (!this.modalOpened)
+            for (let segment of this.board) {
+                if (segment.mousePointing()) segment.colorSegment();
+            }
     }
 
-    display() {
-        push();
-        translate(this.x * size, this.y * size);
-        fill(this.color);
-        stroke(120);
-        rect(0, 0, size, size)
+    Segment.prototype.txt = 0;
 
-        if (this.num != 0) {
-            textAlign(CENTER, CENTER);
-            textSize(24);
-            fill(0);
-            stroke(0);
-            text(this.num, 3, 3, size, size);
+    Segment.prototype.colorSegment = function () {
+
+        if (userInterface.modalOpened == false) {
+
+            this.txt++;
+            this.txt = this.txt % settings.segmentMaxNum;
+
+            if (!(this instanceof Index)) this.changeColor(settings.colorSchemes[settings.activeColorScheme][this.txt - 1])
         }
-
-        pop();
     }
 
-    checkPointing() {
-
-        if (mouseX > this.x * size && mouseX < this.x * size + size &&
-            mouseY > this.y * size && mouseY < this.y * size + size) {
-            return true;
+    Segment.prototype.changeContent = function (val) {
+        if (val) {
+            this.txt = val;
         } else {
-            return false;
+            this.txt = this.basicContent;
+        }
+    }
+
+    Segment.prototype.basicContent = "";
+    Index.prototype.basicContent = "";
+
+    Segment.prototype.changeColor = function (val) {
+        if (val) {
+            this.fill = val;
+            this.stroke = "transparent"
+        } else {
+            this.fill = this.basicFillColor;
+            this.stroke = this.basicStrokeColor
+        }
+    }
+
+    Segment.prototype.basicFillColor = settings.squareFill;
+    Index.prototype.basicFillColor = settings.indexFill;
+
+    Segment.prototype.basicStrokeColor = settings.squareStroke;
+    Index.prototype.basicStrokeColor = settings.indexStroke;
+
+    Segment.prototype.updatePosition = function () {
+        this.pos = createVector(
+            this.iteratorIndex.x * settings.squareSize + settings.squareSpacer * this.iteratorIndex.x + 2,
+            this.iteratorIndex.y * settings.squareSize + settings.squareSpacer * this.iteratorIndex.y + 2
+        );
+    }
+
+    Segment.prototype.retriveBasicValues = function () {
+        this.changeContent();
+    }
+
+    action.showModal = function (value) {
+        let el;
+
+        switch (value) {
+            case 'changeColorSet':
+                this.refreshColorSets();
+
+                select(".modal-title").html("Zestawy kolorów");
+
+                el = createSelect();
+                el.option("Domyślny");
+
+                for (let i = 0; i < settings.colorSchemes.length - 1; i++) {
+                    el.option(`Zestaw ${i+1}`);
+                }
+
+                if (settings.currentColorScheme) el.value(settings.currentColorScheme);
+
+                el.addClass("custom-select switchColorScheme");
+
+                el.changed(this.switchColorScheme);
+
+                select(".modal-body").html("");
+                select(".modal-body").child(el);
+
+                break;
+
+            case 'changeSegmentSize':
+                select(".modal-title").html("Wielkość pól");
+
+                el = createSlider(0.5, 1.5, settings.skalar, 0.10);
+                el.addClass("form-control-range");
+                el.attribute("id", "form-control-ranged")
+                el.changed(() => {
+                    settings.skalar = el.value();
+
+                    settings.squareSize = settings.basicSquareSize * settings.skalar;
+                    settings.squareSpacer = settings.basicSquareSpacing * settings.skalar;
+
+                    let sizeW = settings.squareSize * (settings.squaresBySideW + 2) + 11 * settings.squareSpacer + 6;
+                    let sizeH = settings.squareSize * (settings.squaresBySideH + 2) + 11 * settings.squareSpacer + 6;
+                    resizeCanvas(sizeW, sizeH);
+
+                    for (let s of userInterface.board) {
+                        s.updatePosition();
+                    }
+
+                    select("#scaleP").html(`Skala: ${floor(settings.skalar * 100)}%`);
+                })
+
+                let label = createElement("label", "Zmień wielkość pól")
+                label.attribute("for", "form-control-range");
+
+                let p = createP(`Skala: ${floor(settings.skalar * 100)}%`);
+                p.attribute("id", "scaleP");
+
+                select(".modal-body").html("");
+                select(".modal-body").child(label);
+                select(".modal-body").child(el);
+                select(".modal-body").child(p);
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    action.refreshColorSets = function () {
+        settings.colorsSchemesInList = [];
+        for (let i = 0; i < settings.colorSchemes.length - 1; i++) {
+            settings.colorsSchemesInList.push(`Zestaw ${i+1}`);
+        }
+    }
+
+    action.switchColorScheme = function () {
+        settings["currentColorScheme"] = select(".switchColorScheme").value();
+
+        if (settings.currentColorScheme == "Domyślny") {
+            settings.activeColorScheme = 0;
+        } else {
+            let pos = settings.colorsSchemesInList.indexOf(settings.currentColorScheme);
+            pos++;
+
+            settings.activeColorScheme = pos;
+        }
+
+        for (let s of userInterface.board) {
+            if (!(s instanceof Index)) s.changeColor(settings.colorSchemes[settings.activeColorScheme][s.txt - 1])
         }
 
     }
 
-    increaseNum() {
-        this.num++;
-        this.num = this.num % this.limit;
+    settings.addValues({
+        segmentMaxNum: 5,
+        activeColorScheme: 0,
+        skalar: 1
+    })
+
+    userInterface.executeQueue = {}
+
+    action.saveImg = function () {
+        let data = new Date();
+        saveCanvas(`plansza-${data.getHours()}-${data.getMinutes()}-${data.getSeconds()}`, 'png');
     }
 
-}
-
-let segments = [],
-    bd = [],
-    ins = [];
-
-let bound = [2, 3, 4, 5, 31, 32, 33, 34, 35, 7, 13, 19, 25, 12, 18, 24, 30, 18];
-let skalar;
-let colors = ['white', 'khaki', 'deepskyblue', 'purple', 'greenyellow'];
-let mtmColors = ['white', 'khaki', 'deepskyblue', 'purple', 'greenyellow'];
-let crColors = ['white', 'red', 'yellow', 'blue', 'green'];
-let size;
-let n = 1,
-    z;
-let sel;
-
-function resetBounds() {
-    for (b of bd) {
-        segments[b].num = 0;
+    action.resetBoard = function () {
+        for (let s of userInterface.board) {
+            if (!(s instanceof Index)) {
+                s.retriveBasicValues()
+                s.changeColor();
+            }
+        }
     }
-}
 
-function resetInside() {
-    for (i of ins) {
-        segments[i].num = 0;
+    action.resetIndex = function () {
+        for (let s of userInterface.board) {
+            if ((s instanceof Index)) {
+                s.retriveBasicValues()
+            }
+        }
     }
-}
 
-function changeSet() {
+    settings.colorSchemes = [
+        ['khaki', 'deepskyblue', 'purple', 'greenyellow', '#C0C0C0'],
+        ['red', 'yellow', 'blue', 'green', '#C0C0C0']
+    ];
 
-    let type = sel.value();
-
-    if (type == "Zestaw 1") {
-        colors = mtmColors
-    } else if (type == "Zestaw 2") {
-        colors = crColors;
-    }
-}
-
-function createMenu() {
-
-    btn1 = createButton('Reset opisów');
-    btn1.mouseClicked(resetBounds);
-    select('.btL').child(btn1);
-
-    btn2 = createButton('Reset planszy');
-    btn2.mouseClicked(resetInside);
-    select('.btR').child(btn2);
-
-    skalar = createSlider(60, 140, 60, 10);
-    select('.sld').child(skalar);
-    skalar.changed(resize);
-
-    sel = createSelect();
-    sel.option('Zestaw 1');
-    sel.option('Zestaw 2');
-    sel.changed(changeSet);
-    select('.list').child(sel);
-
-    save = createButton('Zapis planszy do pliku');
-    save.mouseClicked(saveImg);
-    select('.list').child(save);
-
-}
-
-function resize() {
-    size = skalar.value();
-    resizeCanvas(size * 6, size * 6)
-}
-
-function saveImg() {
-    let data = new Date();
-    saveCanvas(`wiezowce-${data.getHours()}-${data.getMinutes()}-${data.getSeconds()}`, 'png');
 }
 
 function setup() {
-    createMenu();
-    size = skalar.value();
+    addMethodsToObjects();
 
-    let c = createCanvas(size * 6, size * 6);
-    select('.box').child(c);
+    userInterface.createInterface().generateBoard();
+    for (let segment of userInterface.board) {
+        if (segment instanceof Index) segment.changeContent();
 
-    for (let i = 0; i < 6; i++) {
-
-        for (let j = 0; j < 6; j++) {
-            if (n != 1 && n != 6 && n != 31 && n != 36) {
-
-                if (bound.includes(n)) {
-                    segments.push(new Segment(j, i, color(211, 211, 211), false));
-                    bd.push(segments.length - 1);
-                } else {
-                    segments.push(new Segment(j, i, color(255, 160, 122), true));
-                    ins.push(segments.length - 1);
-                }
-            }
-            n++;
-        }
+        segment.display();
     }
-    z = true;
+
+    settings.basicSquareSize = settings.squareSize;
+    settings.basicSquareSpacing = settings.squareSpacer;
+
+    noLoop();
 }
 
 function draw() {
-    background('#553D67');
-
-    for (let s of segments) {
-
-        s.display();
-
-        if (s.stat) {
-
-            s.color = colors[s.num];
-        }
+    userInterface.refreshBoard();
+    for (let segment of userInterface.board) {
+        segment.display();
     }
-
 }
 
 function mouseClicked() {
-    for (s of segments) {
-        if (s.checkPointing()) {
-            s.increaseNum();
-        }
-    }
+    userInterface.checkBoardClicks();
+    redraw();
 }
