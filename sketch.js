@@ -70,6 +70,14 @@ function addMethodsToObjects() {
         newColorSet.push('#C0C0C0');
 
         settings.colorSchemes.push(newColorSet);
+        action.refreshColorSets();
+
+        let val;
+        for (let i = 0; i < settings.colorSchemes.length - 1; i++) {
+            val = `Zestaw ${i+1}`;
+        }
+        settings["currentColorScheme"] = val;
+        action.switchColorScheme(true);
     }
 
     action.showModal = function (value) {
@@ -154,9 +162,6 @@ function addMethodsToObjects() {
                 select(".modalBtn").html("Zapisz");
                 select(".modalBtn").attribute('onclick', 'userInterface.addCustomColorSet()');
 
-                print(settings.colorMatrix);
-
-
                 for (let col of settings.colorMatrix) {
 
                     let el = createP(`Kolor ${1 + settings.colorMatrix.indexOf(col)}: `);
@@ -182,8 +187,9 @@ function addMethodsToObjects() {
         }
     }
 
-    action.switchColorScheme = function () {
-        settings["currentColorScheme"] = select(".switchColorScheme").value();
+    action.switchColorScheme = function (dontChange) {
+
+        if (dontChange != true) settings["currentColorScheme"] = select(".switchColorScheme").value();
 
         if (settings.currentColorScheme == "Domyślny") {
             settings.activeColorScheme = 0;
