@@ -58,14 +58,39 @@ function addMethodsToObjects() {
         this.changeContent();
     }
 
+    UserInterface.prototype.addCustomColorSet = function () {
+
+        let newColorSet = [];
+
+        for (let i = 0; i < settings.colorMatrix.length; i++) {
+            let picker = select(`.picker${i}`);
+
+            newColorSet.push(picker.value());
+        }
+        newColorSet.push('#C0C0C0');
+
+        settings.colorSchemes.push(newColorSet);
+    }
+
     action.showModal = function (value) {
         let el;
+
+        if (select(".ownColors")) select(".ownColors").remove();
+        select('.modalBtn').removeAttribute('onclick');
+        select('.modalBtn').html('Zamknij');
 
         switch (value) {
             case 'changeColorSet':
                 this.refreshColorSets();
 
                 select(".modal-title").html("Zestawy kolorów");
+
+                if (!select(".ownColors")) {
+                    let ownScheme = createButton('Dodaj własny zestaw kolorów');
+                    ownScheme.addClass("ownColors btn btn-info btn-sm order-1");
+                    ownScheme.attribute('onclick', "action.showModal('addCustomColorSet')");
+                    ownScheme.parent(select(".footerLeft"));
+                }
 
                 el = createSelect();
                 el.option("Domyślny");
@@ -118,6 +143,30 @@ function addMethodsToObjects() {
                 select(".modal-body").child(label);
                 select(".modal-body").child(el);
                 select(".modal-body").child(p);
+
+                break;
+
+            case 'addCustomColorSet':
+                $('#modal').modal('show');
+                select(".modal-title").html("Dodaj zestaw kolorów");
+                select(".modal-body").html("");
+
+                select(".modalBtn").html("Zapisz");
+                select(".modalBtn").attribute('onclick', 'userInterface.addCustomColorSet()');
+
+                print(settings.colorMatrix);
+
+
+                for (let col of settings.colorMatrix) {
+
+                    let el = createP(`Kolor ${1 + settings.colorMatrix.indexOf(col)}: `);
+                    let picker = createColorPicker(col);
+
+                    picker.addClass(`colorPicker picker${settings.colorMatrix.indexOf(col)}`);
+
+                    picker.parent(el);
+                    select(".modal-body").child(el);
+                }
 
                 break;
 
@@ -185,6 +234,9 @@ function addMethodsToObjects() {
         ['khaki', 'deepskyblue', 'purple', 'greenyellow', '#C0C0C0'],
         ['red', 'yellow', 'blue', 'green', '#C0C0C0']
     ];
+
+    settings.colorMatrix = settings.colorSchemes[1];
+    settings.colorMatrix.pop();
 
 }
 
