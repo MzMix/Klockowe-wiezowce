@@ -58,14 +58,47 @@ function addMethodsToObjects() {
         this.changeContent();
     }
 
+    UserInterface.prototype.addCustomColorSet = function () {
+
+        let newColorSet = [];
+
+        for (let i = 0; i < settings.colorMatrix.length; i++) {
+            let picker = select(`.picker${i}`);
+
+            newColorSet.push(picker.value());
+        }
+        newColorSet.push('#C0C0C0');
+
+        settings.colorSchemes.push(newColorSet);
+        action.refreshColorSets();
+
+        let val;
+        for (let i = 0; i < settings.colorSchemes.length - 1; i++) {
+            val = `Zestaw ${i+1}`;
+        }
+        settings["currentColorScheme"] = val;
+        action.switchColorScheme(true);
+    }
+
     action.showModal = function (value) {
         let el;
+
+        if (select(".ownColors")) select(".ownColors").remove();
+        select('.modalBtn').removeAttribute('onclick');
+        select('.modalBtn').html('Zamknij');
 
         switch (value) {
             case 'changeColorSet':
                 this.refreshColorSets();
 
                 select(".modal-title").html("Zestawy kolorów");
+
+                if (!select(".ownColors")) {
+                    let ownScheme = createButton('Dodaj własny zestaw kolorów');
+                    ownScheme.addClass("ownColors btn btn-info btn-sm order-1");
+                    ownScheme.attribute('onclick', "action.showModal('addCustomColorSet')");
+                    ownScheme.parent(select(".footerLeft"));
+                }
 
                 el = createSelect();
                 el.option("Domyślny");
@@ -121,6 +154,27 @@ function addMethodsToObjects() {
 
                 break;
 
+            case 'addCustomColorSet':
+                $('#modal').modal('show');
+                select(".modal-title").html("Dodaj zestaw kolorów");
+                select(".modal-body").html("");
+
+                select(".modalBtn").html("Zapisz");
+                select(".modalBtn").attribute('onclick', 'userInterface.addCustomColorSet()');
+
+                for (let col of settings.colorMatrix) {
+
+                    let el = createP(`Kolor ${1 + settings.colorMatrix.indexOf(col)}: `);
+                    let picker = createColorPicker(col);
+
+                    picker.addClass(`colorPicker picker${settings.colorMatrix.indexOf(col)}`);
+
+                    picker.parent(el);
+                    select(".modal-body").child(el);
+                }
+
+                break;
+
             default:
                 break;
         }
@@ -133,8 +187,9 @@ function addMethodsToObjects() {
         }
     }
 
-    action.switchColorScheme = function () {
-        settings["currentColorScheme"] = select(".switchColorScheme").value();
+    action.switchColorScheme = function (dontChange) {
+
+        if (dontChange != true) settings["currentColorScheme"] = select(".switchColorScheme").value();
 
         if (settings.currentColorScheme == "Domyślny") {
             settings.activeColorScheme = 0;
@@ -185,6 +240,9 @@ function addMethodsToObjects() {
         ['khaki', 'deepskyblue', 'purple', 'greenyellow', '#C0C0C0'],
         ['red', 'yellow', 'blue', 'green', '#C0C0C0']
     ];
+
+    settings.colorMatrix = settings.colorSchemes[1];
+    settings.colorMatrix.pop();
 
 }
 
