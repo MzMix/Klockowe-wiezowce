@@ -11,12 +11,12 @@
                 ["action.resetBoard()", "action.resetIndex()"]
             ],
             "Udostępnianie": [
-                ["Zapis planszy do pliku"],
-                ["action.saveImg()"]
+                ["Zapis planszy do pliku", "Zapis zestawów kolorów do pliku"],
+                ["action.saveImg()", "action.saveColorSets()"]
             ],
             "Dostosowywanie": [
-                ["Zestawy kolorów", "Zmiana wielkości pól"],
-                ["action.showModal('changeColorSet')", "action.showModal('changeSegmentSize')"]
+                ["Zestawy kolorów", "Zmiana wielkości pól", "Wczytaj zapisane kolory"],
+                ["action.showModal('changeColorSet')", "action.showModal('changeSegmentSize')", "action.showModal('loadColorsFromFile')"]
             ]
         }
     }],

@@ -1,3 +1,12 @@
+function handleFile(file) {
+
+    if (file.type == 'application' && file.subtype == 'json') {
+        // let save = loadJSON(file.name);
+        // print(save)
+        print(file);
+    }
+}
+
 function addMethodsToObjects() {
 
     UserInterface.prototype.checkBoardClicks = function () {
@@ -80,6 +89,10 @@ function addMethodsToObjects() {
         action.switchColorScheme(true);
     }
 
+    UserInterface.prototype.loadSave = function () {
+
+    }
+
     action.showModal = function (value) {
         let el;
 
@@ -159,8 +172,7 @@ function addMethodsToObjects() {
                 select(".modal-title").html("Dodaj zestaw kolorów");
                 select(".modal-body").html("");
 
-                select(".modalBtn").html("Zapisz");
-                select(".modalBtn").attribute('onclick', 'userInterface.addCustomColorSet()');
+                select(".modalBtn").html("Zamknij");
 
                 for (let col of settings.colorMatrix) {
 
@@ -175,6 +187,20 @@ function addMethodsToObjects() {
                     picker.parent(el);
                     select(".modal-body").child(el);
                 }
+
+                break;
+
+            case 'loadColorsFromFile':
+                $('#modal').modal('show');
+                select(".modal-title").html("Wczytaj zestawy kolorów");
+                select(".modal-body").html("");
+
+                select(".modalBtn").html("Wczytaj zapis");
+                select(".modalBtn").attribute('onclick', 'userInterface.loadSave()');
+
+                let input = createFileInput(handleFile, false);
+
+                select(".modal-body").child(input);
 
                 break;
 
@@ -220,6 +246,32 @@ function addMethodsToObjects() {
     action.saveImg = function () {
         let data = new Date();
         saveCanvas(`plansza-${data.getHours()}-${data.getMinutes()}-${data.getSeconds()}`, 'png');
+    }
+
+    action.saveColorSets = function () {
+
+        let json = {};
+        let listOfSets = [];
+        let colorsToSave = [];
+
+        for (let i = 0; i < settings.colorSchemes.length; i++) {
+
+            for (let color of settings.colorSchemes[i]) {
+                if (color != "#C0C0C0") colorsToSave.push(color)
+            }
+
+            name = `set${i}`;
+
+            listOfSets.push({
+                name: name,
+                colors: colorsToSave
+            });
+
+            colorsToSave = [];
+        }
+
+        json.setsOfColors = listOfSets;
+        saveJSON(json, "kolory");
     }
 
     action.resetBoard = function () {
