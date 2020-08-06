@@ -164,7 +164,10 @@ function addMethodsToObjects() {
 
                 for (let col of settings.colorMatrix) {
 
-                    let el = createP(`Kolor ${1 + settings.colorMatrix.indexOf(col)}: `);
+                    let num = 1 + settings.colorMatrix.indexOf(col)
+                    if (num < 10) num = '0' + num.toString();
+                    let el = createP(`Kolor ${num}: `);
+
                     let picker = createColorPicker(col);
 
                     picker.addClass(`colorPicker picker${settings.colorMatrix.indexOf(col)}`);
