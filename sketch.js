@@ -1,10 +1,48 @@
+let loadedFile;
+
 function handleFile(file) {
 
+    loadedFile = file;
+
     if (file.type == 'application' && file.subtype == 'json') {
-        // let save = loadJSON(file.name);
+        //let save = loadJSON(file);
+
+        // let url = URL.createObjectURL(file);
+        // print(url)
+
+        // const mediaSource = new MediaSource();
+        // loadedFile.srcObject = mediaSource;
+
         // print(save)
-        print(file);
+        //print(file);
+
+        // let reader = new FileReader();
+        // reader.onload = function () {
+        //     var dataURL = reader.result;
+        //     var output = document.getElementById('output');
+        //     output.src = dataURL;
+        // }
+        // reader.readAsDataURL(file);
     }
+
+    const MY_JSON_FILE = [{
+        "hello": "world"
+    }];
+
+    let json = JSON.stringify(MY_JSON_FILE);
+
+    const blob = new Blob([file], {
+        type: "application/json"
+    });
+
+    const fr = new FileReader();
+
+    fr.addEventListener("load", e => {
+        // console.log(e.target.result, JSON.parse(fr.result))
+        console.log(fr.result);
+    });
+
+    fr.readAsJSON(blob);
 }
 
 function addMethodsToObjects() {
