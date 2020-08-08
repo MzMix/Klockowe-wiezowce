@@ -7,16 +7,16 @@
         "type": "menuContent",
         "content": {
             "Plansza": [
-                ["Reset planszy", "Reset opisów pól"],
-                ["action.resetBoard()", "action.resetIndex()"]
+                ["Reset planszy", "Reset opisów pól", "Przełącz oznaczenia pól"],
+                ["action.resetBoard()", "action.resetIndex()", "action.hideSegmentContent()"]
             ],
             "Udostępnianie": [
-                ["Zapis planszy do pliku"],
-                ["action.saveImg()"]
+                ["Zapis planszy do pliku", "Zapis zestawów kolorów do pliku"],
+                ["action.saveImg()", "action.saveColorSets()"]
             ],
             "Dostosowywanie": [
-                ["Zestawy kolorów", "Zmiana wielkości pól"],
-                ["action.showModal('changeColorSet')", "action.showModal('changeSegmentSize')"]
+                ["Zestawy kolorów", "Zmiana wielkości pól", "Wczytaj zapisane kolory"],
+                ["action.showModal('changeColorSet')", "action.showModal('changeSegmentSize')", "action.showModal('loadColorsFromFile')"]
             ]
         }
     }],
