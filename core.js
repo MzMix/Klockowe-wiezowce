@@ -247,7 +247,7 @@ class Segment {
 
         rect(0, 0, settings.squareSize, settings.squareSize, this.round)
 
-        if (this.txt) {
+        if (this.txt && !this.textIsInvisible) {
             textSize(settings.squareTextSize);
             fill(this.textColor);
             stroke(this.textStroke)
