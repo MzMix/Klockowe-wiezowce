@@ -5,44 +5,11 @@ function handleFile(file) {
     loadedFile = file;
 
     if (file.type == 'application' && file.subtype == 'json') {
-        //let save = loadJSON(file);
 
-        // let url = URL.createObjectURL(file);
-        // print(url)
+        let fileData = file.data;
+        loadJSON(fileData, action.updateColors, action.rejectedFile);
 
-        // const mediaSource = new MediaSource();
-        // loadedFile.srcObject = mediaSource;
-
-        // print(save)
-        //print(file);
-
-        // let reader = new FileReader();
-        // reader.onload = function () {
-        //     var dataURL = reader.result;
-        //     var output = document.getElementById('output');
-        //     output.src = dataURL;
-        // }
-        // reader.readAsDataURL(file);
     }
-
-    const MY_JSON_FILE = [{
-        "hello": "world"
-    }];
-
-    let json = JSON.stringify(MY_JSON_FILE);
-
-    const blob = new Blob([file], {
-        type: "application/json"
-    });
-
-    const fr = new FileReader();
-
-    fr.addEventListener("load", e => {
-        // console.log(e.target.result, JSON.parse(fr.result))
-        console.log(fr.result);
-    });
-
-    fr.readAsJSON(blob);
 }
 
 function addMethodsToObjects() {
@@ -106,7 +73,7 @@ function addMethodsToObjects() {
     }
 
     UserInterface.prototype.addCustomColorSet = function () {
-
+        print('tak');
         let newColorSet = [];
 
         for (let i = 0; i < settings.colorMatrix.length; i++) {
@@ -129,6 +96,23 @@ function addMethodsToObjects() {
 
     UserInterface.prototype.loadSave = function () {
 
+    }
+
+    action.updateColors = function (givenJson) {
+
+        if (givenJson.setsOfColors.length > 2) {
+            //Mamy dodaną własną paletę
+
+            for (let i = 2; i < givenJson.setsOfColors.length; i++) {
+                settings.colorSchemes.push(givenJson.setsOfColors[i].colors);
+            }
+
+        }
+        action.refreshColorSets
+    }
+
+    action.rejectedFile = function () {
+        alert("Wybrano niepoprawny plik!");
     }
 
     action.showModal = function (value) {
@@ -210,7 +194,8 @@ function addMethodsToObjects() {
                 select(".modal-title").html("Dodaj zestaw kolorów");
                 select(".modal-body").html("");
 
-                select(".modalBtn").html("Zamknij");
+                select(".modalBtn").html("Zapisz");
+                select(".modalBtn").attribute('onclick', 'userInterface.addCustomColorSet()');
 
                 for (let col of settings.colorMatrix) {
 
@@ -225,7 +210,6 @@ function addMethodsToObjects() {
                     picker.parent(el);
                     select(".modal-body").child(el);
                 }
-
                 break;
 
             case 'loadColorsFromFile':
