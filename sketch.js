@@ -1,3 +1,17 @@
+let loadedFile;
+
+function handleFile(file) {
+
+    loadedFile = file;
+
+    if (file.type == 'application' && file.subtype == 'json') {
+
+        let fileData = file.data;
+        loadJSON(fileData, action.updateColors, action.rejectedFile);
+
+    }
+}
+
 function addMethodsToObjects() {
 
     UserInterface.prototype.checkBoardClicks = function () {
@@ -59,7 +73,7 @@ function addMethodsToObjects() {
     }
 
     UserInterface.prototype.addCustomColorSet = function () {
-
+        print('tak');
         let newColorSet = [];
 
         for (let i = 0; i < settings.colorMatrix.length; i++) {
@@ -78,6 +92,27 @@ function addMethodsToObjects() {
         }
         settings["currentColorScheme"] = val;
         action.switchColorScheme(true);
+    }
+
+    UserInterface.prototype.loadSave = function () {
+
+    }
+
+    action.updateColors = function (givenJson) {
+
+        if (givenJson.setsOfColors.length > 2) {
+            //Mamy dodaną własną paletę
+
+            for (let i = 2; i < givenJson.setsOfColors.length; i++) {
+                settings.colorSchemes.push(givenJson.setsOfColors[i].colors);
+            }
+
+        }
+        action.refreshColorSets
+    }
+
+    action.rejectedFile = function () {
+        alert("Wybrano nieprawidłowy plik!");
     }
 
     action.showModal = function (value) {
@@ -175,6 +210,19 @@ function addMethodsToObjects() {
                     picker.parent(el);
                     select(".modal-body").child(el);
                 }
+                break;
+
+            case 'loadColorsFromFile':
+                $('#modal').modal('show');
+                select(".modal-title").html("Wczytaj zestawy kolorów");
+                select(".modal-body").html("");
+
+                select(".modalBtn").html("Wczytaj zapis");
+                select(".modalBtn").attribute('onclick', 'userInterface.loadSave()');
+
+                let input = createFileInput(handleFile, false);
+
+                select(".modal-body").child(input);
 
                 break;
 
@@ -207,6 +255,8 @@ function addMethodsToObjects() {
             if (!(s instanceof Index)) s.changeColor(settings.colorSchemes[settings.activeColorScheme][s.txt - 1])
         }
 
+        action.hideSegmentContent(true);
+
     }
 
     settings.addValues({
@@ -220,6 +270,32 @@ function addMethodsToObjects() {
     action.saveImg = function () {
         let data = new Date();
         saveCanvas(`plansza-${data.getHours()}-${data.getMinutes()}-${data.getSeconds()}`, 'png');
+    }
+
+    action.saveColorSets = function () {
+
+        let json = {};
+        let listOfSets = [];
+        let colorsToSave = [];
+
+        for (let i = 0; i < settings.colorSchemes.length; i++) {
+
+            for (let color of settings.colorSchemes[i]) {
+                if (color != "#C0C0C0") colorsToSave.push(color)
+            }
+
+            name = `set${i}`;
+
+            listOfSets.push({
+                name: name,
+                colors: colorsToSave
+            });
+
+            colorsToSave = [];
+        }
+
+        json.setsOfColors = listOfSets;
+        saveJSON(json, "kolory");
     }
 
     action.resetBoard = function () {
@@ -239,6 +315,36 @@ function addMethodsToObjects() {
         }
     }
 
+    action.hideSegmentContent = function (refresh) {
+
+        if (refresh == true) {
+            for (let s of userInterface.board) {
+                if (!(s instanceof Index) && s.textIsInvisible == true) {
+                    s.textColor = s.fill;
+                    s.textStroke = s.fill;
+                }
+            }
+        } else {
+            for (let s of userInterface.board) {
+                if (!(s instanceof Index)) {
+
+                    if (!s.textIsInvisible) {
+                        s.textColor = s.fill;
+                        s.textStroke = s.fill;
+                        s.textIsInvisible = true;
+                    } else {
+                        s.textColor = settings.squareTextColor;
+                        s.textStroke = settings.squareTextStrokeColor;
+                        s.textIsInvisible = false;
+                    }
+
+                }
+            }
+        }
+
+
+    }
+
     settings.colorSchemes = [
         ['khaki', 'deepskyblue', 'purple', 'greenyellow', '#C0C0C0'],
         ['red', 'yellow', 'blue', 'green', '#C0C0C0']
@@ -255,7 +361,6 @@ function setup() {
     userInterface.createInterface().generateBoard();
     for (let segment of userInterface.board) {
         if (segment instanceof Index) segment.changeContent();
-
         segment.display();
     }
 

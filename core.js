@@ -235,6 +235,8 @@ class Segment {
         this.fill = settings.squareFill;
         this.round = settings.squareCurvature;
         this.textColor = settings.squareTextColor;
+        this.textStroke = settings.squareTextStrokeColor;
+        this.textIsInvisible = false;
     }
 
     display() {
@@ -248,7 +250,7 @@ class Segment {
         if (this.txt) {
             textSize(settings.squareTextSize);
             fill(this.textColor);
-            stroke(settings.squareTextStrokeColor)
+            stroke(this.textStroke)
             textAlign(CENTER, CENTER)
             strokeWeight(settings.squareTextWeight);
             text(this.txt, 2, 2, settings.squareSize, settings.squareSize);
