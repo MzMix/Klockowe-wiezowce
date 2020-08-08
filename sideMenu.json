@@ -7,8 +7,8 @@
         "type": "menuContent",
         "content": {
             "Plansza": [
-                ["Reset planszy", "Reset opisów pól"],
-                ["action.resetBoard()", "action.resetIndex()"]
+                ["Reset planszy", "Reset opisów pól", "Przełącz oznaczenia pól"],
+                ["action.resetBoard()", "action.resetIndex()", "action.hideSegmentContent()"]
             ],
             "Udostępnianie": [
                 ["Zapis planszy do pliku", "Zapis zestawów kolorów do pliku"],

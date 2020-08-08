@@ -112,7 +112,7 @@ function addMethodsToObjects() {
     }
 
     action.rejectedFile = function () {
-        alert("Wybrano niepoprawny plik!");
+        alert("Wybrano nieprawidłowy plik!");
     }
 
     action.showModal = function (value) {
@@ -313,6 +313,24 @@ function addMethodsToObjects() {
         }
     }
 
+    action.hideSegmentContent = function () {
+        for (let s of userInterface.board) {
+            if (!(s instanceof Index)) {
+
+                if (!s.textIsInvisible) {
+                    s.textColor = s.fill;
+                    s.textStroke = s.fill;
+                    s.textIsInvisible = true;
+                } else {
+                    s.textColor = settings.squareTextColor;
+                    s.textStroke = settings.squareTextStrokeColor;
+                    s.textIsInvisible = false;
+                }
+
+            }
+        }
+    }
+
     settings.colorSchemes = [
         ['khaki', 'deepskyblue', 'purple', 'greenyellow', '#C0C0C0'],
         ['red', 'yellow', 'blue', 'green', '#C0C0C0']
@@ -329,7 +347,6 @@ function setup() {
     userInterface.createInterface().generateBoard();
     for (let segment of userInterface.board) {
         if (segment instanceof Index) segment.changeContent();
-
         segment.display();
     }
 
