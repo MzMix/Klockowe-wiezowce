@@ -255,6 +255,8 @@ function addMethodsToObjects() {
             if (!(s instanceof Index)) s.changeColor(settings.colorSchemes[settings.activeColorScheme][s.txt - 1])
         }
 
+        action.hideSegmentContent(true);
+
     }
 
     settings.addValues({
@@ -313,22 +315,34 @@ function addMethodsToObjects() {
         }
     }
 
-    action.hideSegmentContent = function () {
-        for (let s of userInterface.board) {
-            if (!(s instanceof Index)) {
+    action.hideSegmentContent = function (refresh) {
 
-                if (!s.textIsInvisible) {
+        if (refresh == true) {
+            for (let s of userInterface.board) {
+                if (!(s instanceof Index) && s.textIsInvisible == true) {
                     s.textColor = s.fill;
                     s.textStroke = s.fill;
-                    s.textIsInvisible = true;
-                } else {
-                    s.textColor = settings.squareTextColor;
-                    s.textStroke = settings.squareTextStrokeColor;
-                    s.textIsInvisible = false;
                 }
+            }
+        } else {
+            for (let s of userInterface.board) {
+                if (!(s instanceof Index)) {
 
+                    if (!s.textIsInvisible) {
+                        s.textColor = s.fill;
+                        s.textStroke = s.fill;
+                        s.textIsInvisible = true;
+                    } else {
+                        s.textColor = settings.squareTextColor;
+                        s.textStroke = settings.squareTextStrokeColor;
+                        s.textIsInvisible = false;
+                    }
+
+                }
             }
         }
+
+
     }
 
     settings.colorSchemes = [
