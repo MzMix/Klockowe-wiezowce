@@ -1,21 +1,4 @@
 let loadedFile;
-var templateHTML;
-
-function stringToHTML(str) {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(str, 'text/html');
-    return doc.body;
-};
-
-function loadHTML() {
-    fetch('./template.html').then(function (response) {
-        return response.text();
-    }).then(function (html) {
-        templateHTML = stringToHTML(html);
-    }).catch(function (err) {
-        console.warn('Something went wrong.', err);
-    });
-}
 
 function handleFile(file) {
 
@@ -131,7 +114,7 @@ function addMethodsToObjects() {
     }
 
     action.showModal = function (value) {
-        let el, templatka, clone, insert;
+        let el;
         select(".modal-dialog").html("");
 
         switch (value) {
@@ -355,7 +338,6 @@ function addMethodsToObjects() {
 }
 
 function setup() {
-    loadHTML();
     addMethodsToObjects();
 
     userInterface.createInterface().generateBoard();
