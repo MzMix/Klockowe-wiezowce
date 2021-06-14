@@ -71,7 +71,6 @@ function addMethodsToObjects() {
     }
 
     UserInterface.prototype.addCustomColorSet = function () {
-        print('tak');
         let newColorSet = [];
 
         for (let i = 0; i < settings.colorMatrix.length; i++) {
@@ -128,8 +127,9 @@ function addMethodsToObjects() {
                 this.refreshColorSets();
 
                 el = createSelect();
-                el.option("Domyślny");
-                for (let i = 0; i < settings.colorSchemes.length - 1; i++) {
+                el.option("Kreatywny");
+                el.option("Matematyczny");
+                for (let i = 1; i < settings.colorSchemes.length - 1; i++) {
                     el.option(`Zestaw ${i+1}`);
                 }
                 if (settings.currentColorScheme) el.value(settings.currentColorScheme);
@@ -224,8 +224,10 @@ function addMethodsToObjects() {
 
         if (dontChange != true) settings["currentColorScheme"] = select(".switchColorScheme").value();
 
-        if (settings.currentColorScheme == "Domyślny") {
+        if (settings.currentColorScheme == "Kreatywny") {
             settings.activeColorScheme = 0;
+        } else if (settings.currentColorScheme == "Matematyczny") {
+            settings.activeColorScheme = 1;
         } else {
             let pos = settings.colorsSchemesInList.indexOf(settings.currentColorScheme);
             pos++;
@@ -348,8 +350,8 @@ function addMethodsToObjects() {
     }
 
     settings.colorSchemes = [
-        ['khaki', 'deepskyblue', 'purple', 'greenyellow', '#C0C0C0'],
-        ['red', 'yellow', 'blue', 'green', '#C0C0C0']
+        ['red', 'yellow', 'blue', 'green', '#C0C0C0'],
+        ['khaki', 'deepskyblue', 'purple', 'greenyellow', '#C0C0C0']
     ];
 
     settings.colorMatrix = settings.colorSchemes[1];
