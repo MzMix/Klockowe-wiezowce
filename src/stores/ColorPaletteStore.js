@@ -8,13 +8,13 @@ export const useColorPaletteStore = defineStore('ColorPaletteManager', () => {
         {
             value: 0,
             text: 'Kreatywny',
-            colorSet: ['#188B18', '#18C4FD', '#8B188B', '#FDFD18', '#FD1818', '#B3FD42', '#000000', '#D5D5D5', '#1818FD', '#FD9618', '#FFFFFF'],
+            colorSet: ['#FD1818', '#FDFD18', '#1818FD', '#188B18', '#FFFFFF'],
             standard: true,
         },
         {
             value: 1,
             text: 'Matematyczny',
-            colorSet: ['#188B18', '#18C4FD', '#8B188B', '#f0e796', '#FD1818', '#B3FD42', '#000000', '#D5D5D5', '#955629', '#FD9618', '#FFFFFF'],
+            colorSet: ['#f0e796', '#18C4FD', '#8B188B', '#B3FD42', '#FFFFFF'],
             standard: true,
         }
     ]));

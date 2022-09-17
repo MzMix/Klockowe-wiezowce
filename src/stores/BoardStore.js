@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 export const useBoardStore = defineStore('BoardManager', () => {
 
-    const BoardFill = ref(useLocalStorage("BoardFill", new Array(100).fill(null)));
+    const BoardFill = ref(useLocalStorage("BoardFill", new Array(16).fill(null)));
 
     const BoardName = ref(useLocalStorage("BoardName", "Nowa Plansza"));
 
@@ -16,7 +16,7 @@ export const useBoardStore = defineStore('BoardManager', () => {
     }
 
     function ClearBoard() {
-        BoardFill.value.fill(10);
+        BoardFill.value.fill(4);
     }
 
     function GetCellValue(id) {

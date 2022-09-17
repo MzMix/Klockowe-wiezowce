@@ -10,14 +10,6 @@ export const useIndexStore = defineStore('IndexManager', () => {
             text: 'Numeracja'
         },
         {
-            value: 1,
-            text: 'Adresowanie'
-        },
-        {
-            value: 2,
-            text: 'Kolory'
-        },
-        {
             value: 3,
             text: 'Brak'
         }

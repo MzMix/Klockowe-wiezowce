@@ -5,21 +5,14 @@ import { get } from '@vueuse/core';
 import InputSelectArray from '../General/InputSelectArray.vue';
 
 import { useColorPaletteStore } from "../../stores/ColorPaletteStore";
-import { useSymetryStore } from "../../stores/SymetryStore";
 import { useIndexStore } from "../../stores/IndexStore";
 import { useBoardStore } from "../../stores/BoardStore";
-import { useStoreAxes } from "../../stores/AxesStore";
 import { useCellStore } from "../../stores/CellStore";
 
 //Color & Palette
 const ColorPaletteStore = useColorPaletteStore();
 const { SetPalette } = ColorPaletteStore;
 const { ColorPalettes, SelectedPalette } = storeToRefs(ColorPaletteStore);
-
-//Symetry
-const SymetryStore = useSymetryStore();
-const { SetSymetry } = SymetryStore;
-const { SelectedSymetry, SymetryTypes } = storeToRefs(SymetryStore);
 
 //Index
 const IndexStore = useIndexStore();
@@ -29,10 +22,6 @@ const { SelectedIndexContentType, IndexContentTypes, } = storeToRefs(IndexStore)
 //Board
 const BoardStore = useBoardStore();
 const { ClearBoard } = BoardStore;
-
-// Axes
-const AxesStore = useStoreAxes();
-const { ToggleAxes } = AxesStore;
 
 //Cell
 const CellStore = useCellStore();
@@ -47,16 +36,6 @@ const { CellContentTypes, SelectedCellContentType } = storeToRefs(CellStore);
 
     <div class="text-center p-2 w-100 ps-3">
         <h3 class="mt-2 mb-4">Rysowanie <i class="bi bi-brush"></i></h3>
-
-        <!-- Show axes -->
-        <button class="btn btn-outline-primary" @click="(ToggleAxes())">Przełącz osie</button>
-        <hr />
-
-        <!-- Switch symetry type  -->
-        <InputSelectArray @action="(value) => SetSymetry(value)" :options="get(SymetryTypes)"
-            :selected-value="get(SelectedSymetry)" ariaLabel="Wybór rodzaju symetrii">
-            <i class="bi bi-symmetry-vertical"></i> <i class="bi bi-symmetry-horizontal"></i> | Wybór symetrii:
-        </InputSelectArray>
 
         <!-- Switch cell content -->
 

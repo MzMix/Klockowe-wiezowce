@@ -1,5 +1,4 @@
 <script setup>
-import ColorSelectionArea from '../Menu/ColorSelectionArea.vue'
 import SettingsMenu from '../Menu/SettingsMenu.vue';
 import DrawingMenu from '../Menu/DrawingMenu.vue'
 import SharingMenu from '../Menu/SharingMenu.vue';
@@ -15,10 +14,9 @@ const { MenuOpened } = storeToRefs(MenuStore);
     <div class="border-end border-dark h-100 position-relative overflow-x-hidden overflow-y-scroll">
 
         <Transition name="slide-up">
-            <ColorSelectionArea v-if="MenuOpened == 0" class="position-absolute" />
-            <DrawingMenu v-else-if="MenuOpened == 1" class="position-absolute" />
-            <SharingMenu v-else-if="MenuOpened == 2" class="position-absolute" />
-            <SettingsMenu v-else-if="MenuOpened == 3" class="position-absolute" />
+            <DrawingMenu v-if="MenuOpened == 0" class="position-absolute" />
+            <SharingMenu v-else-if="MenuOpened == 1" class="position-absolute" />
+            <SettingsMenu v-else-if="MenuOpened == 2" class="position-absolute" />
         </Transition>
 
     </div>

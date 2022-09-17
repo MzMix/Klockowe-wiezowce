@@ -4,7 +4,7 @@
     -ms-user-select: none;
     user-select: none;
 
-    --cell-size: 3rem;
+    --cell-size: 5rem;
 
     --CustomPurple: #7430fa;
 
@@ -22,6 +22,7 @@
     box-sizing: border-box;
     width: var(--cell-size);
     height: var(--cell-size);
+    font-size: 1.35em !important;
     aspect-ratio: 1/1;
 
     display: grid;
@@ -51,12 +52,4 @@
 
 .cellOnHover{
     filter: invert(20%);
-}
-
-.positionEntry::after{
-    content: ',';
-}
-
-.positionEntry:last-child:after{
-    content: '';
 }

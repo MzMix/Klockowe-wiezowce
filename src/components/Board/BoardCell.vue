@@ -4,22 +4,16 @@ import { get } from '@vueuse/core';
 import { computed, ref, watch } from "vue";
 
 import { useColorPaletteStore } from "../../stores/ColorPaletteStore";
-import { useSymetryStore } from "../../stores/SymetryStore";
 import { useBoardStore } from "../../stores/BoardStore";
 import { useCellStore } from "../../stores/CellStore";
 
-import { CalculatePosition, GetId, CalculateBoardPosition } from "../../utils/CalculatePositionAndId";
-import { GetLetter } from "../../utils/TextUtilities";
-
 // const { GetCellColor, SetCellColor_Selected } = store;
+
+import { CalculateBoardPosition } from "../../utils/CalculatePositionAndId";
 
 //Color & Palette
 const ColorPaletteStore = useColorPaletteStore();
-const { GetSelectedColor, InterpreteColorValue, GetBoardDefaultColorId } = ColorPaletteStore;
-
-//Symetry
-const SymetryStore = useSymetryStore();
-const { SelectedSymetry } = storeToRefs(SymetryStore);
+const { InterpreteColorValue, GetBoardDefaultColorId } = ColorPaletteStore;
 
 //Board
 const BoardStore = useBoardStore();
@@ -38,56 +32,16 @@ const Hover = ref(false);
 
 function ColorCell() {
 
-    let target = null;
-    let selectedColor = GetSelectedColor();
+    let color = GetCellValue(props.cellId);
 
-    if (selectedColor == undefined || selectedColor == null) return;
-
-    switch (get(SelectedSymetry)) {
-        //Brak
-        default:
-        case 0:
-            target = null;
-            break;
-
-        //Oś X
-        case 1:
-            target = {
-                x: get(PositionCCS).x,
-                y: -get(PositionCCS).y,
-            };
-            break;
-
-        //Oś Y
-        case 2:
-            target = {
-                x: -get(PositionCCS).x,
-                y: get(PositionCCS).y,
-            };
-            break;
-
-        //Środek układu
-        case 3:
-            target = {
-                x: -get(PositionCCS).x,
-                y: -get(PositionCCS).y,
-            };
-            break;
+    if (color == null || color == undefined) {
+        color = 0;
+    } else {
+        color = (color + 1) % 5;
     }
 
-    SaveToBoard(props.cellId, selectedColor)
-
-    if (target) {
-        let targetId = document.getElementById(GetId(target)).getAttribute('pos');
-        SaveToBoard(targetId, selectedColor)
-    }
-
+    SaveToBoard(props.cellId, color)
 }
-
-const PositionCCS = computed(() => {
-    let id = new Number(props.cellId);
-    return CalculatePosition(id);
-});
 
 const PositionBoard = computed(() => {
     let id = new Number(props.cellId);
@@ -96,21 +50,19 @@ const PositionBoard = computed(() => {
 
 const content = computed(() => {
 
-    switch (get(SelectedCellContentType)) {
-        //Brak
-        default:
-        case 0:
-            return '';
+    if (get(SelectedCellContentType) === 0) {
+        return '';
+    } else if (get(SelectedCellContentType) === 1) {
 
-        //Numeracja
-        case 1:
-            return props.cellId;
-
-        //Adresowanie
-        case 2:
-            return `${GetLetter(get(PositionBoard).x)}${get(PositionBoard).y}`;
+        if (GetCellValue(props.cellId) == null || GetCellValue(props.cellId) == 4) {
+            return ''
+        } else {
+            return GetCellValue(props.cellId) + 1;
+        }
 
     }
+
+    return '';
 
 });
 
@@ -125,15 +77,17 @@ watch(Hover, () => {
     if (!get(UseBoardHighlight)) return;
 
     if (get(Hover)) {
-        let indexX = document.getElementsByClassName(`x${get(PositionBoard).x + 1}`);
+        let indexX = document.getElementsByClassName(`x${get(PositionBoard).x}`);
         let indexY = document.getElementsByClassName(`y${get(PositionBoard).y}`);
+
+        console.log(`x${get(PositionBoard).x}`, `y${get(PositionBoard).y}`)
 
         for (let i = 0; i < 2; i++) {
             indexX[i].classList.add('cellOnHover');
             indexY[i].classList.add('cellOnHover');
         }
     } else {
-        let indexX = document.getElementsByClassName(`x${get(PositionBoard).x + 1}`);
+        let indexX = document.getElementsByClassName(`x${get(PositionBoard).x}`);
         let indexY = document.getElementsByClassName(`y${get(PositionBoard).y}`);
 
         for (let i = 0; i < 2; i++) {
@@ -148,8 +102,7 @@ watch(Hover, () => {
 
 <template>
     <div class="squareOnBoard border-top border-dark border-start" @click="ColorCell()"
-        :style="{ backgroundColor: CellColor }" :id="GetId(PositionCCS)" @mouseover="Hover = true"
-        @mouseleave="Hover = false">
+        :style="{ backgroundColor: CellColor }" @mouseover="Hover = true" @mouseleave="Hover = false">
         {{ content }}
     </div>
 </template >

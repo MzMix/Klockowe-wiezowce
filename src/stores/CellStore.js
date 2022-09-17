@@ -12,10 +12,6 @@ export const useCellStore = defineStore('CellManager', () => {
         {
             value: 1,
             text: 'Numeracja'
-        },
-        {
-            value: 2,
-            text: 'Adresowanie'
         }
     ]);
 

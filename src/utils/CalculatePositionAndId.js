@@ -1,45 +1,18 @@
 /**
-* @description Calculate position of a cell in a Cartesian coordinate system with the center being point (0,0).
-* @param {number} id
-* @return {{x: number, y: number}}
-*/
-export function CalculatePosition(id) {
-    let tmp = new Number(id) / 10;
-
-    let x = Math.round((tmp % 1) * 10);
-    if (x === 0) x = 10;
-
-    let y = -Math.floor(tmp);
-    if (x === 10) y++;
-
-    x -= 6;
-    y += 5;
-
-    if (x >= 0) x++;
-    if (y <= 0) y--;
-
-    return {
-        x: x,
-        y: y,
-    };
-}
-
-/**
-* @description Calculate position of a cell on a 10x10 board.
+* @description Calculate position of a cell on a 4x4 board.
 * @param {number} id
 * @return {{x: number, y: number}}
 */
 export function CalculateBoardPosition(id) {
-    let tmp = new Number(id) / 10;
+    let x = id % 4;
+    if (x == 0) x = 4;
 
-    let x = Math.round((tmp % 1) * 10);
-    if (x === 0) x = 10;
+    let y;
 
-    let y = Math.floor(tmp);
-    if (x === 10) y--;
-
-    x--;
-    y++;
+    if (id >= 1 && id <= 4) y = 1;
+    if (id >= 5 && id <= 8) y = 2;
+    if (id >= 9 && id <= 12) y = 3;
+    if (id >= 13 && id <= 16) y = 4;
 
     return {
         x: x,

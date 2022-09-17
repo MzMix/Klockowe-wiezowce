@@ -7,7 +7,7 @@ const { SwitchMenu } = MenuStore;
 
 const TopBarElement = "align-self-center fs-4";
 
-const icons = ['palette', 'brush', 'share', 'gear'];
+const icons = ['brush', 'share', 'gear'];
 
 </script>
 
@@ -25,7 +25,7 @@ const icons = ['palette', 'brush', 'share', 'gear'];
             <BoardName />
         </div>
 
-        <div :class="TopBarElement" class="me-3">W układzie z klockami <i class="bi bi-bricks"></i></div>
+        <div :class="TopBarElement" class="me-3">Klockowe wieżowce <i class="bi bi-bricks"></i></div>
 
     </div>
 </template>
