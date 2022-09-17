@@ -80,8 +80,6 @@ watch(Hover, () => {
         let indexX = document.getElementsByClassName(`x${get(PositionBoard).x}`);
         let indexY = document.getElementsByClassName(`y${get(PositionBoard).y}`);
 
-        console.log(`x${get(PositionBoard).x}`, `y${get(PositionBoard).y}`)
-
         for (let i = 0; i < 2; i++) {
             indexX[i].classList.add('cellOnHover');
             indexY[i].classList.add('cellOnHover');
