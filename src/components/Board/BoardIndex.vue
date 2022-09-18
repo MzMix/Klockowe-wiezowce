@@ -1,82 +1,68 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { get } from '@vueuse/core';
-import { getCurrentInstance, computed, ref } from "vue";
+import { computed, ref } from "vue";
 
-import { useColorPaletteStore } from "../../stores/ColorPaletteStore";
 import { useIndexStore } from "../../stores/IndexStore";
-
-import { GetLetter } from "../../utils/TextUtilities";
-
-//Color & Palette
-const ColorPaletteStore = useColorPaletteStore();
-const { InterpreteColorValue } = ColorPaletteStore;
 
 //Index
 const IndexStore = useIndexStore();
+const { GetIndexValue, SaveToIndexFill } = IndexStore;
 const { SelectedIndexContentType } = storeToRefs(IndexStore);
 
 const props = defineProps({
-    sector: String,
-});
-
-const listId = computed(() => {
-    return getCurrentInstance().vnode.key;
+    sector: {
+        type: String,
+        required: true
+    },
+    cellId: {
+        type: Number,
+        required: true
+    },
 });
 
 const fillColor = ref('#F2F2F2');
 
-function ResetFillColor() {
-    fillColor.value = '#F2F2F2';
-}
+function ChangeIndex() {
 
-function SetFillColor(value) {
-    fillColor.value = value;
+    let index = GetIndexValue(props.cellId);
+
+    if (index == null || index == undefined) {
+        index = 0;
+    } else {
+        index = (index + 1) % 5;
+    }
+
+    SaveToIndexFill(props.cellId, index)
 }
 
 const content = computed(() => {
 
-    let val = '';
+    if (get(SelectedIndexContentType) === 4) {
+        return '';
+    } else if (get(SelectedIndexContentType) === 0) {
 
-    switch (get(SelectedIndexContentType)) {
-
-        //Numeracja
-        default:
-        case 0:
-            ResetFillColor();
-
-            return listId.value;
-
-        //Adresowanie
-        case 1:
-            ResetFillColor();
-
-            if (props.sector === 'horizontal') val = GetLetter(listId.value - 1);
-            else val = listId.value;
-
-            return val;
-
-        //Kolory
-        case 2:
-            SetFillColor(InterpreteColorValue(listId.value - 1));
-            return '';
-
-        //Brak
-        case 3:
-            ResetFillColor();
-            return '';
+        if (GetIndexValue(props.cellId) == null || GetIndexValue(props.cellId) == 4) {
+            return ''
+        } else {
+            return GetIndexValue(props.cellId) + 1;
+        }
 
     }
+
+    return '';
 
 });
 
 </script>
 
 <template >
-    <div class="squareOnBoard border-dark border-top border-start" :style="{ backgroundColor: fillColor }">
+    <div class="squareOnBoard border-dark border-top border-start" @click="ChangeIndex()"
+        :style="{ backgroundColor: fillColor }">
         {{ content }}
     </div>
 </template>
 
 <style scoped>
+
 </style>

@@ -14,13 +14,15 @@ const Board = ref(null);
     <div id="BoardOuterContainer">
       <div id="BoardContainer" class="p-2">
         <div class=" index top-index">
-          <BoardIndex v-for="index in 3" :key="index" sector="horizontal" :class="'x'+index"></BoardIndex>
+          <BoardIndex v-for="index in 3" :cellId="index" :key="index" sector="horizontal" :class="'x'+index">
+          </BoardIndex>
           <BoardIndex :cellId="4" :key="4" sector="horizontal" class="border-dark border-end x4">4</BoardIndex>
         </div>
 
         <div class="index left-index">
-          <BoardIndex v-for="index in 3" :key="index" sector="vertical" :class="'y'+index"></BoardIndex>
-          <BoardIndex :cellId="4" :key="4" sector="vertical" class="border-dark border-bottom y4">4</BoardIndex>
+          <BoardIndex v-for="index in 3" :cellId="4+index" :key="index" sector="vertical" :class="'y'+index">
+          </BoardIndex>
+          <BoardIndex :cellId="8" :key="4" sector="vertical" class="border-dark border-bottom y4">4</BoardIndex>
 
         </div>
 
@@ -29,14 +31,16 @@ const Board = ref(null);
         </div>
 
         <div class="index right-index border-dark border-end">
-          <BoardIndex v-for="index in 3" :key="index" sector="vertical" :class="'y'+index"></BoardIndex>
-          <BoardIndex :cellId="4" :key="4" sector="vertical" class="border-dark border-bottom y4">4</BoardIndex>
+          <BoardIndex v-for="index in 3" :cellId="8+index" :key="index" sector="vertical" :class="'y'+index">
+          </BoardIndex>
+          <BoardIndex :cellId="12" :key="4" sector="vertical" class="border-dark border-bottom y4">4</BoardIndex>
 
         </div>
 
         <div class="index bottom-index border-dark border-bottom">
-          <BoardIndex v-for="index in 3" :key="index" sector="horizontal" :class="'x'+index"></BoardIndex>
-          <BoardIndex :cellId="4" :key="4" sector="horizontal" class="border-dark border-end x4">4</BoardIndex>
+          <BoardIndex v-for="index in 3" :cellId="12+index" :key="index" sector="horizontal" :class="'x'+index">
+          </BoardIndex>
+          <BoardIndex :cellId="16" :key="4" sector="horizontal" class="border-dark border-end x4">4</BoardIndex>
 
         </div>
 

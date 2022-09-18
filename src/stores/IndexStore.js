@@ -21,10 +21,31 @@ export const useIndexStore = defineStore('IndexManager', () => {
         SelectedIndexContentType.value = value;
     }
 
+    const IndexFill = ref(useLocalStorage("IndexFill", new Array(16).fill(null)));
+
+    function SaveToIndexFill(id, value) {
+        let i = id - 1;
+        IndexFill.value[i] = value;
+    }
+
+    function ClearIndexFill() {
+        IndexFill.value.fill(4);
+    }
+
+    function GetIndexValue(id) {
+        let i = id - 1;
+        return IndexFill.value[i];
+    }
+
     return {
         IndexContentTypes,
         SelectedIndexContentType,
+        IndexFill,
+
         SetIndexContentType,
+        SaveToIndexFill,
+        ClearIndexFill,
+        GetIndexValue
     };
 
 });
