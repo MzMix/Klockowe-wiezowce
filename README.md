@@ -1,7 +1,22 @@
-# Vue 3 + Vite
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# Description
 
-## Recommended IDE Setup
+This app was created to help with conducting math classes using bricks. It is an interactive board that can be filled with different colors to represent brick "skyscrapers" with height displayed on the board cell.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+This app is part of a collection of similar tools created to aid in teaching STEAM related subjects.
+
+[All of the apps](https://mzmix.github.io/)
+
+## Credits
+- Coding: Mikołaj Zuziak
+- Didactic support: Wojciech Zuziak
+- Testing: Mikołaj Zuziak & Wojciech Zuziak
+  
+## Licenses
+
+- [Vue.js](https://vuejs.org/): MIT
+- [Pinia](https://pinia.vuejs.org/): MIT
+- [VueUSe](https://vueuse.org/): MIT
+- [vue-color-kit](https://github.com/anish2690/vue-color-kit/): MIT
+- [Bootstrap](https://getbootstrap.com/): MIT
+- [Bootstrap Icons](https://icons.getbootstrap.com/): MIT
