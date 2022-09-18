@@ -16,7 +16,7 @@ const { ColorPalettes, SelectedPalette } = storeToRefs(ColorPaletteStore);
 
 //Index
 const IndexStore = useIndexStore();
-const { SetIndexContentType } = IndexStore;
+const { SetIndexContentType, ClearIndexFill } = IndexStore;
 const { SelectedIndexContentType, IndexContentTypes, } = storeToRefs(IndexStore);
 
 //Board
@@ -60,7 +60,12 @@ const { CellContentTypes, SelectedCellContentType } = storeToRefs(CellStore);
         </InputSelectArray>
 
         <!-- Clear board -->
-        <button class="btn btn-danger mb-4 w-75 m-auto" @click="ClearBoard()">Wyczyść planszę</button>
+        <button class="btn btn-danger w-75 m-auto" @click="ClearBoard()">Wyczyść planszę</button>
+
+        <hr />
+
+        <!-- Clear index -->
+        <button class="btn btn-danger w-75 m-auto" @click="ClearIndexFill()">Wyczyść oznaczenia pól</button>
     </div>
 
 </template>
