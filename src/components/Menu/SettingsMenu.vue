@@ -1,19 +1,29 @@
 <script setup>
+//Import from Pinia, Bootstrap
 import { storeToRefs } from "pinia";
-
 import Modal from 'bootstrap/js/src/modal'
+
+//Import components
 import ManageColorPalettesModal from "./ManageColorPalettes.vue";
 
+//Import Stores
 import { useStoreWelcomeModal } from "../../stores/WelcomeStore";
 import { useBoardStore } from "../../stores/BoardStore";
+import { useMenuStore } from '../../stores/MenuStore'
 
-const store = useStoreWelcomeModal();
-const { EnableWelcome } = store;
+//Welcome Modal Store
+const WelcomeModalStore = useStoreWelcomeModal();
+const { EnableWelcome } = WelcomeModalStore;
 
-//Board
+//Board Store
 const BoardStore = useBoardStore();
 const { ToogleBoardHighlight } = BoardStore;
 const { UseBoardHighlight } = storeToRefs(BoardStore);
+
+//Menu Store
+const MenuStore = useMenuStore();
+const { ShowLeaveWarn } = storeToRefs(MenuStore);
+const { ToogleLeaveWarn } = MenuStore;
 
 function showModal() {
     var CustomPaletteModal = new Modal(document.getElementById('ManageColorPalettesModal'))
@@ -44,6 +54,12 @@ function ClearData() {
             <span v-if="!UseBoardHighlight">Włącz podświetlanie komórek</span>
         </button>
 
+        <hr>
+
+        <button class="btn btn-outline-primary" @click="ToogleLeaveWarn()">
+            <span v-if="ShowLeaveWarn">Wyłącz ostrzeżenie przed wyjściem</span>
+            <span v-if="!ShowLeaveWarn">Włącz ostrzeżenie przed wyjściem</span>
+        </button>
 
         <hr />
 
