@@ -1,12 +1,15 @@
 <script setup>
+//Import from Pinia, Vueuse, Vue
 import { storeToRefs } from 'pinia';
 import { get } from '@vueuse/core';
+import { inject } from 'vue';
 
+//Import component
 import InputSelectArray from '../General/InputSelectArray.vue';
 
+//Import stores from Pinia
 import { useColorPaletteStore } from "../../stores/ColorPaletteStore";
 import { useIndexStore } from "../../stores/IndexStore";
-import { useBoardStore } from "../../stores/BoardStore";
 import { useCellStore } from "../../stores/CellStore";
 
 //Color & Palette
@@ -16,20 +19,17 @@ const { ColorPalettes, SelectedPalette } = storeToRefs(ColorPaletteStore);
 
 //Index
 const IndexStore = useIndexStore();
-const { SetIndexContentType, ClearIndexFill } = IndexStore;
+const { SetIndexContentType } = IndexStore;
 const { SelectedIndexContentType, IndexContentTypes, } = storeToRefs(IndexStore);
-
-//Board
-const BoardStore = useBoardStore();
-const { ClearBoard } = BoardStore;
 
 //Cell
 const CellStore = useCellStore();
 const { SetCellContentType } = CellStore;
 const { CellContentTypes, SelectedCellContentType } = storeToRefs(CellStore);
 
-// ChangePalette
-// ColorPalettes, SelectedPaletteKey
+//Inject Toast trigger
+const ShowToast = inject('ToastTrigger');
+
 </script>
 
 <template>
@@ -60,12 +60,13 @@ const { CellContentTypes, SelectedCellContentType } = storeToRefs(CellStore);
         </InputSelectArray>
 
         <!-- Clear board -->
-        <button class="btn btn-danger w-75 m-auto" @click="ClearBoard()">Wyczyść planszę</button>
-
+        <button class="btn btn-danger m-auto w-75" @click="ShowToast(`#ClearBoard`, { autohide: false })
+        ">Wyczyść planszę <i class="bi bi-trash"></i></button>
         <hr />
 
         <!-- Clear index -->
-        <button class="btn btn-danger w-75 m-auto" @click="ClearIndexFill()">Wyczyść oznaczenia pól</button>
+        <button class="btn btn-danger w-75 m-auto" @click="ShowToast(`#ClearIndex`, { autohide: false })
+        ">Wyczyść oznaczenia pól</button>
     </div>
 
 </template>

@@ -30,7 +30,7 @@ const Theme = computed(() => {
 
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" :id="props.Name">
 
-        <div class="toast-header" :class="Theme">
+        <div class="toast-header text-center" :class="Theme">
             <div class="me-2">
                 <slot name="icon"><i class="bi bi-info-circle"></i></slot>
             </div>
