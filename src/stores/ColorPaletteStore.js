@@ -8,18 +8,18 @@ export const useColorPaletteStore = defineStore('ColorPaletteManager', () => {
         {
             value: 0,
             text: 'Kreatywny',
-            colorSet: ['#FD1818', '#FDFD18', '#1818FD', '#188B18', '#FFFFFF'],
+            colorSet: ['#FD1818', '#FDFD18', '#1818FD', '#188B18', 'white'],
             standard: true,
         },
         {
             value: 1,
             text: 'Matematyczny',
-            colorSet: ['#f0e796', '#18C4FD', '#8B188B', '#B3FD42', '#FFFFFF'],
+            colorSet: ['#f0e796', '#18C4FD', '#8B188B', '#B3FD42', 'white'],
             standard: true,
         }
     ]));
 
-    const BoardDefaultColor = ref(useLocalStorage('boardDefaultColor', '#FFFFFF'));
+    const BoardDefaultColor = ref(useLocalStorage('boardDefaultColor', 'white'));
 
     const SelectedPalette = ref(useLocalStorage('SelectedPalette', 0));
 
