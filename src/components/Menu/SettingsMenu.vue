@@ -13,7 +13,8 @@ import { useMenuStore } from '../../stores/MenuStore'
 
 //Welcome Modal Store
 const WelcomeModalStore = useStoreWelcomeModal();
-const { EnableWelcome } = WelcomeModalStore;
+const { ShowWelcome } = storeToRefs(WelcomeModalStore);
+const { ToogleWelcome } = WelcomeModalStore;
 
 //Board Store
 const BoardStore = useBoardStore();
@@ -45,7 +46,9 @@ function ClearData() {
 
         <hr />
 
-        <button class="btn btn-outline-primary" @click="EnableWelcome()">Pokazuj panel powitalny</button>
+        <button class="btn btn-outline-primary" @click="ToogleWelcome()">
+            <span v-if="ShowWelcome">Nie pokazuj panelu powitalnego</span>
+            <span v-if="!ShowWelcome">Pokazuj panel powitalny</span></button>
 
         <hr />
 

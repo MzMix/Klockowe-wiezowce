@@ -4,10 +4,14 @@ import SideMenu from './components/MainPage/SideMenu.vue'
 import WelcomeModal from './components/General/WelcomeModal.vue'
 import AppBoard from './components/Board/AppBoard.vue'
 import TopBar from './components/MainPage/TopBar.vue'
+import ToastManager from './components/Toast/ToastManager.vue'
 
 //Import from Pinia, Vue
-import { onMounted } from 'vue';
+import { onMounted, provide } from 'vue';
 import { storeToRefs } from 'pinia';
+
+//Import from Bootstrap
+import { Toast } from 'bootstrap'
 
 //Import Menu Store
 import { useMenuStore } from './stores/MenuStore'
@@ -22,6 +26,21 @@ onMounted(() => {
     return 'Are you sure you want to leave?';
   };
 })
+
+//Provide function for triggering toasts
+provide('ToastTrigger', (querry, options = {
+  animation: true,
+  autohide: true,
+  delay: 5000
+}) => {
+  const toastElList = document.querySelectorAll(querry)
+  const toastList = [...toastElList].map(toastEl => new Toast(toastEl, options))
+
+  toastList.forEach(toast => {
+    toast.show()
+  })
+});
+
 </script>
 
 <template>
@@ -43,6 +62,8 @@ onMounted(() => {
       </div>
 
     </div>
+
+    <ToastManager />
 
   </div>
 

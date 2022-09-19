@@ -1,0 +1,88 @@
+<script setup>
+//Import Comoponents
+import bsToast from './bsToast.vue';
+
+// import { inject, onMounted } from 'vue';
+
+//Import Stores
+import { useBoardStore } from "../../stores/BoardStore";
+import { useIndexStore } from "../../stores/IndexStore";
+
+//Index
+const IndexStore = useIndexStore();
+const { ClearIndexFill } = IndexStore;
+
+//Board Store
+const BoardStore = useBoardStore();
+const { ClearBoard } = BoardStore;
+
+//For designing Toasts
+// const ShowToast = inject('ToastTrigger');
+// onMounted(() => {
+//     for (let i = 1; i <= 8; i++) {
+//         ShowToast(`#t${i}`)
+//     }
+// })
+</script>
+    
+<template>
+
+    <div aria-live="polite" aria-atomic="true" id="ToastGroup">
+        <div class="toast-container bottom-0 end-0 p-3">
+
+            <bsToast Theme="purple" Name="ColorPalettesAdded">
+                <template #header>Dodano nową paletę kolorów!</template>
+                <template #time>Teraz</template>
+                <template #body>Aby zmienić wybraną paletę przejdź do:<br /> <strong>Rysowanie > Zmiana palety
+                        kolorów</strong></template>
+            </bsToast>
+
+        </div>
+    </div>
+
+    <div aria-live="polite" aria-atomic="true" id="ToastGroup">
+        <div class="toast-container bottom-0 end-0 p-3">
+
+            <bsToast Theme="danger" Name="ClearBoard">
+                <template #header>Potwierdź akcję!</template>
+                <template #time>Teraz</template>
+                <template #body>
+                    <div class="w-100 text-center">
+                        <h6>Potwierdź wyczyszczenie planszy:</h6>
+                        <button class="btn btn-danger m-2" @click="ClearBoard()" data-bs-dismiss="toast">Wyczyść planszę
+                            <i class="bi bi-trash"></i></button>
+                    </div>
+                </template>
+            </bsToast>
+
+        </div>
+    </div>
+
+    <div aria-live="polite" aria-atomic="true" id="ToastGroup">
+        <div class="toast-container bottom-0 end-0 p-3">
+
+            <bsToast Theme="danger" Name="ClearIndex">
+                <template #header>Potwierdź akcję!</template>
+                <template #time>Teraz</template>
+                <template #body>
+                    <div class="w-100 text-center">
+                        <h6>Potwierdź wyczyszczenie oznaczeń pól:</h6>
+                        <button class="btn btn-danger w-75 m-auto" @click="ClearIndexFill()"
+                            data-bs-dismiss="toast">Wyczyść oznaczenia
+                            pól</button>
+
+                    </div>
+                </template>
+            </bsToast>
+
+        </div>
+    </div>
+
+</template>
+    
+<style scoped>
+#ToastGroup {
+    top: 0;
+    right: 0;
+}
+</style>
