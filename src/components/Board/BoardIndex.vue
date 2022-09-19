@@ -23,14 +23,21 @@ const props = defineProps({
 
 const fillColor = ref('#F2F2F2');
 
-function ChangeIndex() {
+function ChangeIndex(add = true) {
 
     let index = GetIndexValue(props.cellId);
 
     if (index == null || index == undefined) {
         index = 0;
-    } else {
+        SaveToIndexFill(props.cellId, index)
+        return;
+    }
+
+    if (add) {
         index = (index + 1) % 5;
+    } else {
+        index--;
+        if (index < 0) index = 4;
     }
 
     SaveToIndexFill(props.cellId, index)
@@ -58,7 +65,7 @@ const content = computed(() => {
 
 <template >
     <div class="squareOnBoard border-dark border-top border-start" @click="ChangeIndex()"
-        :style="{ backgroundColor: fillColor }">
+        @contextmenu.prevent="ChangeIndex(false)" :style="{ backgroundColor: fillColor }">
         {{ content }}
     </div>
 </template>

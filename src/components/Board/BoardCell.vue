@@ -34,17 +34,25 @@ const props = defineProps({
 
 const Hover = ref(false);
 
-function ColorCell() {
+function ColorCell(add = true) {
 
     let color = GetCellValue(props.cellId);
 
     if (color == null || color == undefined) {
         color = 0;
-    } else {
-        color = (color + 1) % 5;
+        SaveToBoard(props.cellId, color);
+        return;
     }
 
-    SaveToBoard(props.cellId, color)
+    if (add) {
+        color = (color + 1) % 5;
+    } else {
+        color--;
+        if (color < 0) color = 4;
+    }
+
+    SaveToBoard(props.cellId, color);
+
 }
 
 const PositionBoard = computed(() => {
@@ -109,7 +117,8 @@ watch(Hover, () => {
 
 <template>
     <div class="squareOnBoard border-top border-dark border-start" @click="ColorCell()"
-        :style="{ backgroundColor: CellColor, color: TextColor }" @mouseover="Hover = true" @mouseleave="Hover = false">
+        @contextmenu.prevent="ColorCell(false)" :style="{ backgroundColor: CellColor, color: TextColor }"
+        @mouseover="Hover = true" @mouseleave="Hover = false">
         {{ content }}
     </div>
 </template >
