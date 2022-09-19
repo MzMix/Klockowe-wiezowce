@@ -1,15 +1,19 @@
 <script setup>
+//Import from Pinia, Vueuse, Vue
 import { storeToRefs } from "pinia";
 import { get } from '@vueuse/core';
 import { computed, ref, watch } from "vue";
 
+//Import Stores
 import { useColorPaletteStore } from "../../stores/ColorPaletteStore";
 import { useBoardStore } from "../../stores/BoardStore";
 import { useCellStore } from "../../stores/CellStore";
 
 // const { GetCellColor, SetCellColor_Selected } = store;
 
+//Import from Utils
 import { CalculateBoardPosition } from "../../utils/CalculatePositionAndId";
+import { GetTextColorOnBackground } from '../../utils/TextUtilities'
 
 //Color & Palette
 const ColorPaletteStore = useColorPaletteStore();
@@ -72,6 +76,11 @@ const CellColor = computed(() => {
     return InterpreteColorValue(boardValue);
 });
 
+const TextColor = computed(() => {
+    return GetTextColorOnBackground(CellColor.value);
+})
+
+
 watch(Hover, () => {
 
     if (!get(UseBoardHighlight)) return;
@@ -100,7 +109,7 @@ watch(Hover, () => {
 
 <template>
     <div class="squareOnBoard border-top border-dark border-start" @click="ColorCell()"
-        :style="{ backgroundColor: CellColor }" @mouseover="Hover = true" @mouseleave="Hover = false">
+        :style="{ backgroundColor: CellColor, color: TextColor }" @mouseover="Hover = true" @mouseleave="Hover = false">
         {{ content }}
     </div>
 </template >
