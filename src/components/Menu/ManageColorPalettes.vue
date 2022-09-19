@@ -1,21 +1,25 @@
 <script setup>
+//Import from Pinia, Vue
 import { ref } from "vue";
 import { storeToRefs } from 'pinia'
 
+//Import components
+import ExportColorPalettes from './ExportColorPalettes.vue';
 import AddCustomColorPalette from './AddCustomColorPalette.vue';
 import EditColorPalette from './EditColorPalette.vue';
 import FileUpload from "./FileUpload.vue";
 
+//Import Stores
 import { useColorPaletteStore } from "../../stores/ColorPaletteStore";
 
+//Palette Store
 const ColorPaletteStore = useColorPaletteStore();
 const { RemovePalette } = ColorPaletteStore;
-
 const { ColorPalettes, BoardDefaultColor } = storeToRefs(ColorPaletteStore);
 
+//Refs
 const AddPaletteKey = ref(0);
 const EditColorPaletteKey = ref(0);
-
 const PaletteToEdit = ref(null);
 
 const PaletteToRemove = ref({
@@ -52,7 +56,7 @@ function HandleEditPalette(value) {
 <template>
     <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ManageColorPalettesModal"
         tabindex="-1" aria-labelledby="CustomPaletteModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="CustomPaletteModalLabel">Zarządzaj paletami kolorów</h5>
@@ -92,6 +96,14 @@ function HandleEditPalette(value) {
                             <FileUpload />
                         </div>
 
+                        <div>
+                            <label for="ExportPaletteBtn" class="form-label col-auto">Eksportuj własne palety kolorów:
+                            </label>
+                            <div id="ExportPaletteBtn">
+                                <ExportColorPalettes :UseIcon="true" />
+                            </div>
+                        </div>
+                        
                         <div class="d-flex flex-column">
                             <label for="paletteCreatorBtn" class="form-label col-auto">Dodaj własne palety kolorów:
                             </label>
