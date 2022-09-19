@@ -14,10 +14,15 @@ export const useStoreWelcomeModal = defineStore('WelcomeMenager', () => {
         ShowWelcome.value = true;
     }
 
+    function ToogleWelcome() {
+        ShowWelcome.value = !ShowWelcome.value
+    }
+
     return {
         ShowWelcome,
         DesibleWelcome,
-        EnableWelcome
+        EnableWelcome,
+        ToogleWelcome
     };
 
 });
