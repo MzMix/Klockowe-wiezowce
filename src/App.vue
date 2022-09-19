@@ -1,9 +1,27 @@
 <script setup>
+//Import components
 import SideMenu from './components/MainPage/SideMenu.vue'
 import WelcomeModal from './components/General/WelcomeModal.vue'
 import AppBoard from './components/Board/AppBoard.vue'
 import TopBar from './components/MainPage/TopBar.vue'
 
+//Import from Pinia, Vue
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+
+//Import Menu Store
+import { useMenuStore } from './stores/MenuStore'
+
+//Menu Store
+const MenuStore = useMenuStore();
+const { ShowLeaveWarn } = storeToRefs(MenuStore);
+
+onMounted(() => {
+  if (!ShowLeaveWarn.value) return;
+  window.onbeforeunload = function () {
+    return 'Are you sure you want to leave?';
+  };
+})
 </script>
 
 <template>
@@ -21,7 +39,7 @@ import TopBar from './components/MainPage/TopBar.vue'
       </div>
 
       <div class="col-xl-9 col-lg-8 col-sm-9 pt-4 d-flex flex-column justify-content-center">
-        <AppBoard class="mb-5"/>
+        <AppBoard class="mb-5" />
       </div>
 
     </div>
