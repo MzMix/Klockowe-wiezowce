@@ -1,11 +1,11 @@
 <script setup>
 import ExportColorPalettes from './ExportColorPalettes.vue';
 
-import { DownloadCanvas, GetDateForFileName } from '../../utils/SharingUtilities';
+import { DownloadCanvas, GetDateForFileName } from '@Utils/SharingUtilities';
 import html2canvas from 'html2canvas';
 
 import { storeToRefs } from "pinia";
-import { useBoardStore } from "../../stores/BoardStore";
+import { useBoardStore } from "@Stores/BoardStore";
 
 const BoardStore = useBoardStore();
 const { BoardName } = storeToRefs(BoardStore);

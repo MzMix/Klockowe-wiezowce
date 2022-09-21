@@ -5,15 +5,15 @@ import { get } from '@vueuse/core';
 import { computed, ref, watch } from "vue";
 
 //Import Stores
-import { useColorPaletteStore } from "../../stores/ColorPaletteStore";
-import { useBoardStore } from "../../stores/BoardStore";
-import { useCellStore } from "../../stores/CellStore";
+import { useColorPaletteStore } from "@Stores/ColorPaletteStore";
+import { useBoardStore } from "@Stores/BoardStore";
+import { useCellStore } from "@Stores/CellStore";
 
 // const { GetCellColor, SetCellColor_Selected } = store;
 
 //Import from Utils
-import { CalculateBoardPosition } from "../../utils/CalculatePositionAndId";
-import { GetTextColorOnBackground } from '../../utils/TextUtilities'
+import { CalculateBoardPosition } from "@Utils/CalculatePositionAndId";
+import { GetTextColorOnBackground } from '@Utils/TextUtilities'
 
 //Color & Palette
 const ColorPaletteStore = useColorPaletteStore();

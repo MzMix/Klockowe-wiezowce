@@ -3,14 +3,14 @@
 import { storeToRefs } from 'pinia';
 
 //Import Palette Store
-import { useColorPaletteStore } from "../../stores/ColorPaletteStore";
+import { useColorPaletteStore } from "@Stores/ColorPaletteStore";
 
 //Import Utils
-import { DonloadContent } from '../../utils/SharingUtilities';
+import { DonloadContent } from '@Utils/SharingUtilities';
 
 //Color & Palette
 const ColorPaletteStore = useColorPaletteStore();
-const { ColorPalettes, SelectedPalette } = storeToRefs(ColorPaletteStore);
+const { ColorPalettes, SelectedPalette, AppName } = storeToRefs(ColorPaletteStore);
 
 const props = defineProps({
     UseIcon: {
@@ -25,7 +25,11 @@ function ExportColorPalettes() {
     let customPaletes = ColorPalettes.value.slice(2);
     let out = JSON.stringify({ ColorPalettes: customPaletes, SelectedPalette: SelectedPalette.value }, null, 4);
 
-    DonloadContent(out, 'palety-eksport.json', 'text/plain');
+    customPaletes.forEach(palette => {
+        palette.appOrigin = AppName.value;
+    })
+
+    DonloadContent(out, `palety-eksport-${AppName.value}.json`, 'text/plain');
 }
 
 </script>

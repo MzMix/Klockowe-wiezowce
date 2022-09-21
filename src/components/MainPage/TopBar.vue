@@ -1,5 +1,5 @@
 <script setup>
-import { useMenuStore } from "../../stores/MenuStore";
+import { useMenuStore } from "@Stores/MenuStore";
 import BoardName from "./BoardName.vue";
 
 const MenuStore = useMenuStore();

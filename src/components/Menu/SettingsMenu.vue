@@ -4,12 +4,12 @@ import { storeToRefs } from "pinia";
 import Modal from 'bootstrap/js/src/modal'
 
 //Import components
-import ManageColorPalettesModal from "./ManageColorPalettes.vue";
+import ManageColorPalettesModal from "@Menu/ManageColorPalettes.vue";
 
 //Import Stores
-import { useStoreWelcomeModal } from "../../stores/WelcomeStore";
-import { useBoardStore } from "../../stores/BoardStore";
-import { useMenuStore } from '../../stores/MenuStore'
+import { useStoreWelcomeModal } from "@Stores/WelcomeStore";
+import { useBoardStore } from "@Stores/BoardStore";
+import { useMenuStore } from '@Stores/MenuStore'
 
 //Welcome Modal Store
 const WelcomeModalStore = useStoreWelcomeModal();
