@@ -1,6 +1,6 @@
 <script setup>
-import BoardCell from './BoardCell.vue'
-import BoardIndex from './BoardIndex.vue'
+import BoardCell from '@Board/BoardCell.vue'
+import BoardIndex from '@Board/BoardIndex.vue'
 
 import { ref } from 'vue'
 

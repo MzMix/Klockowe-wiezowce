@@ -3,7 +3,7 @@ import { storeToRefs } from "pinia";
 import { get } from '@vueuse/core';
 import { computed, ref } from "vue";
 
-import { useIndexStore } from "../../stores/IndexStore";
+import { useIndexStore } from "@Stores/IndexStore";
 
 //Index
 const IndexStore = useIndexStore();

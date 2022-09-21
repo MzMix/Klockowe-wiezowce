@@ -1,12 +1,12 @@
 <script setup>
 //Import Comoponents
-import bsToast from './bsToast.vue';
+import bsToast from '@Toast/bsToast.vue';
 
 // import { inject, onMounted } from 'vue';
 
 //Import Stores
-import { useBoardStore } from "../../stores/BoardStore";
-import { useIndexStore } from "../../stores/IndexStore";
+import { useBoardStore } from "@Stores/BoardStore";
+import { useIndexStore } from "@Stores/IndexStore";
 
 //Index
 const IndexStore = useIndexStore();
