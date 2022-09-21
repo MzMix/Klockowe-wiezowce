@@ -49,15 +49,13 @@ export const useColorPaletteStore = defineStore('ColorPaletteManager', () => {
 
     function RemovePalette(id) {
 
+        if (ColorPalettes.value[id].standard) {
+            return;
+        }
+
         if (SelectedPalette.value === id) SelectedPalette.value = 0;
 
         ColorPalettes.value.splice(id, 1);
-    }
-
-    const SelectedColor = ref(useLocalStorage('SelectedColor', null));
-
-    function SetColorNumber(colorNumber) {
-        SelectedColor.value = colorNumber;
     }
 
     function GetSelectedPalette() {
@@ -70,14 +68,6 @@ export const useColorPaletteStore = defineStore('ColorPaletteManager', () => {
 
     function InterpreteColorValue(colorValue) {
         return GetSelectedPalette()[colorValue];
-    }
-
-    function InterpreteSelectedColor() {
-        return GetSelectedPalette()[SelectedColor.value];
-    }
-
-    function GetSelectedColor() {
-        return SelectedColor.value;
     }
 
     function GetBoardDefaultColorId() {
@@ -94,13 +84,9 @@ export const useColorPaletteStore = defineStore('ColorPaletteManager', () => {
         RemovePalette,
         GetSelectedPaletteOrigin,
 
-        SelectedColor,
-        SetColorNumber,
-        GetSelectedColor,
         GetBoardDefaultColorId,
 
         InterpreteColorValue,
-        InterpreteSelectedColor
     };
 
 });

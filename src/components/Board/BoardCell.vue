@@ -9,8 +9,6 @@ import { useColorPaletteStore } from "@Stores/ColorPaletteStore";
 import { useBoardStore } from "@Stores/BoardStore";
 import { useCellStore } from "@Stores/CellStore";
 
-// const { GetCellColor, SetCellColor_Selected } = store;
-
 //Import from Utils
 import { CalculateBoardPosition } from "@Utils/CalculatePositionAndId";
 import { GetTextColorOnBackground } from '@Utils/TextUtilities'
