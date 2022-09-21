@@ -4,18 +4,22 @@ import { ref } from 'vue'
 
 export const useColorPaletteStore = defineStore('ColorPaletteManager', () => {
 
+    const AppName = ref('KW');
+
     const ColorPalettes = ref(useLocalStorage('ColorPalettes', [
         {
             value: 0,
             text: 'Kreatywny',
             colorSet: ['#FD1818', '#FDFD18', '#1818FD', '#188B18', 'white'],
             standard: true,
+            appOrigin: AppName.value,
         },
         {
             value: 1,
             text: 'Matematyczny',
             colorSet: ['#f0e796', '#18C4FD', '#8B188B', '#B3FD42', 'white'],
             standard: true,
+            appOrigin: AppName.value,
         }
     ]));
 
@@ -27,7 +31,7 @@ export const useColorPaletteStore = defineStore('ColorPaletteManager', () => {
         SelectedPalette.value = id;
     }
 
-    function AddPalette(name, colors) {
+    function AddPalette(name, colors, origin) {
 
         let available = ColorPalettes.value.filter(el => el.text == name).length <= 0;
 
@@ -38,6 +42,7 @@ export const useColorPaletteStore = defineStore('ColorPaletteManager', () => {
                 text: name,
                 colorSet: colors,
                 standard: false,
+                appOrigin: origin,
             });
         }
     }
@@ -59,6 +64,10 @@ export const useColorPaletteStore = defineStore('ColorPaletteManager', () => {
         return ColorPalettes.value[SelectedPalette.value].colorSet;
     }
 
+    function GetSelectedPaletteOrigin() {
+        return ColorPalettes.value[SelectedPalette.value].appOrigin;
+    }
+
     function InterpreteColorValue(colorValue) {
         return GetSelectedPalette()[colorValue];
     }
@@ -76,12 +85,14 @@ export const useColorPaletteStore = defineStore('ColorPaletteManager', () => {
     }
 
     return {
+        AppName,
         SelectedPalette,
         ColorPalettes,
         SetPalette,
         BoardDefaultColor,
         AddPalette,
         RemovePalette,
+        GetSelectedPaletteOrigin,
 
         SelectedColor,
         SetColorNumber,

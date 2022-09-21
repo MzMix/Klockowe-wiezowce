@@ -35,9 +35,16 @@ function ReadFile(file) {
 
 //Add color palettes-cp to store
 function ProcessJSON(data) {
+
     for (const cp of data) {
-        AddPalette(cp.text, cp.colorSet);
+
+        if (cp.appOrigin) {
+            AddPalette(cp.text, cp.colorSet, cp.appOrigin);
+        } else {
+            AddPalette(cp.text, cp.colorSet, 'UNKNOWN');
+        }
     }
+
     ShowToast('#ColorPalettesAdded');
 }
 
