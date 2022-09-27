@@ -15,7 +15,7 @@ import { GetTextColorOnBackground } from '@Utils/TextUtilities';
 
 //Color & Palette
 const ColorPaletteStore = useColorPaletteStore();
-const { InterpreteColorValue, GetBoardDefaultColorId } = ColorPaletteStore;
+const { InterpreteColorValue, GetBoardDefaultColorId, GetSelectedPaletteLength } = ColorPaletteStore;
 
 //Board
 const BoardStore = useBoardStore();
@@ -36,6 +36,8 @@ function ColorCell(add = true) {
 
     let color = GetCellValue(props.cellId);
 
+    let paletteLength = GetSelectedPaletteLength();
+
     if (color == null || color == undefined) {
         color = 0;
         SaveToBoard(props.cellId, color);
@@ -43,10 +45,10 @@ function ColorCell(add = true) {
     }
 
     if (add) {
-        color = (color + 1) % 5;
+        color = (color + 1) % paletteLength;
     } else {
         color--;
-        if (color < 0) color = 4;
+        if (color < 0) color = paletteLength - 1;
     }
 
     SaveToBoard(props.cellId, color);
@@ -60,11 +62,13 @@ const PositionBoard = computed(() => {
 
 const content = computed(() => {
 
+    let paletteLength = GetSelectedPaletteLength();
+
     if (get(SelectedCellContentType) === 0) {
         return '';
     } else if (get(SelectedCellContentType) === 1) {
 
-        if (GetCellValue(props.cellId) == null || GetCellValue(props.cellId) == 4) {
+        if (GetCellValue(props.cellId) == null || GetCellValue(props.cellId) == paletteLength - 1) {
             return '';
         } else {
             return GetCellValue(props.cellId) + 1;
