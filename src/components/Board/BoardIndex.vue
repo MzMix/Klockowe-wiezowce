@@ -29,7 +29,7 @@ function ChangeIndex(add = true) {
 
     if (index == null || index == undefined) {
         index = 0;
-        SaveToIndexFill(props.cellId, index)
+        SaveToIndexFill(props.cellId, index);
         return;
     }
 
@@ -40,7 +40,7 @@ function ChangeIndex(add = true) {
         if (index < 0) index = 4;
     }
 
-    SaveToIndexFill(props.cellId, index)
+    SaveToIndexFill(props.cellId, index);
 }
 
 const content = computed(() => {
@@ -50,7 +50,7 @@ const content = computed(() => {
     } else if (get(SelectedIndexContentType) === 0) {
 
         if (GetIndexValue(props.cellId) == null || GetIndexValue(props.cellId) == 4) {
-            return ''
+            return '';
         } else {
             return GetIndexValue(props.cellId) + 1;
         }

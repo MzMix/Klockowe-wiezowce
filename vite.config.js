@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 import path from 'path';
 
 // https://vitejs.dev/config/
@@ -19,8 +19,8 @@ export default defineConfig({
       '@Menu/': `${path.resolve(__dirname, 'src/components/Menu')}/`,
       '@Toast/': `${path.resolve(__dirname, 'src/components/Toast')}/`,
       '@Stores/': `${path.resolve(__dirname, 'src/Stores')}/`,
-      '@Utils/': `${path.resolve(__dirname, 'src/Utils')}/`,
+      '@Utils/': `${path.resolve(__dirname, 'src/utils')}/`,
     }
   },
   plugins: [vue()],
-})
+});

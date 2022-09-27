@@ -6,7 +6,7 @@ const props = defineProps({
         type: String,
         default: 'white',
         validator(value) {
-            return ['white', 'purple', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'].includes(value)
+            return ['white', 'purple', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'].includes(value);
         }
     },
     Name: {
@@ -14,16 +14,18 @@ const props = defineProps({
         type: String,
         default: `Toast-${Date.now()}`
     }
-})
+});
+
 const Theme = computed(() => {
     let result = `bg-${props.Theme} `;
     if (props.Theme === 'white') {
         result += 'text-black';
     } else {
-        result += 'text-white'
+        result += 'text-white';
     }
     return result;
-})
+});
+
 </script>
     
 <template>

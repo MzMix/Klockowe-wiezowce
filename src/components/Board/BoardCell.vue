@@ -11,7 +11,7 @@ import { useCellStore } from "@Stores/CellStore";
 
 //Import from Utils
 import { CalculateBoardPosition } from "@Utils/CalculatePositionAndId";
-import { GetTextColorOnBackground } from '@Utils/TextUtilities'
+import { GetTextColorOnBackground } from '@Utils/TextUtilities';
 
 //Color & Palette
 const ColorPaletteStore = useColorPaletteStore();
@@ -65,7 +65,7 @@ const content = computed(() => {
     } else if (get(SelectedCellContentType) === 1) {
 
         if (GetCellValue(props.cellId) == null || GetCellValue(props.cellId) == 4) {
-            return ''
+            return '';
         } else {
             return GetCellValue(props.cellId) + 1;
         }
@@ -84,7 +84,7 @@ const CellColor = computed(() => {
 
 const TextColor = computed(() => {
     return GetTextColorOnBackground(CellColor.value);
-})
+});
 
 
 watch(Hover, () => {
@@ -108,7 +108,7 @@ watch(Hover, () => {
             indexY[i].classList.remove('cellOnHover');
         }
     }
-})
+});
 
 
 </script>

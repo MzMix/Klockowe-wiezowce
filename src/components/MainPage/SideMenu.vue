@@ -1,6 +1,6 @@
 <script setup>
 import SettingsMenu from '@Menu/SettingsMenu.vue';
-import DrawingMenu from '@Menu/DrawingMenu.vue'
+import DrawingMenu from '@Menu/DrawingMenu.vue';
 import SharingMenu from '@Menu/SharingMenu.vue';
 
 import { useMenuStore } from "@Stores/MenuStore";

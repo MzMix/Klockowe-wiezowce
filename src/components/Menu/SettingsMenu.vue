@@ -1,7 +1,7 @@
 <script setup>
 //Import from Pinia, Bootstrap
 import { storeToRefs } from "pinia";
-import Modal from 'bootstrap/js/src/modal'
+import Modal from 'bootstrap/js/src/modal';
 
 //Import components
 import ManageColorPalettesModal from "@Menu/ManageColorPalettes.vue";
@@ -9,7 +9,7 @@ import ManageColorPalettesModal from "@Menu/ManageColorPalettes.vue";
 //Import Stores
 import { useStoreWelcomeModal } from "@Stores/WelcomeStore";
 import { useBoardStore } from "@Stores/BoardStore";
-import { useMenuStore } from '@Stores/MenuStore'
+import { useMenuStore } from '@Stores/MenuStore';
 
 //Welcome Modal Store
 const WelcomeModalStore = useStoreWelcomeModal();
@@ -27,7 +27,7 @@ const { ShowLeaveWarn } = storeToRefs(MenuStore);
 const { ToogleLeaveWarn } = MenuStore;
 
 function showModal() {
-    var CustomPaletteModal = new Modal(document.getElementById('ManageColorPalettesModal'))
+    var CustomPaletteModal = new Modal(document.getElementById('ManageColorPalettesModal'));
     CustomPaletteModal.show();
 }
 
