@@ -13,33 +13,90 @@ import { storeToRefs } from 'pinia';
 //Import from Bootstrap
 import { Toast } from 'bootstrap';
 
-//Import Menu Store
+//Import Utils
+import { ShortcutManager } from '@Utils/ShortcutManager';
+
+//Import Stores
 import { useMenuStore } from '@Stores/MenuStore';
+import { useColorPaletteStore } from '@Stores/ColorPaletteStore';
+import { useIndexStore } from '@Stores/IndexStore';
+import { useCellStore } from "@Stores/CellStore";
+import { useBoardStore } from "@Stores/BoardStore";
 
 //Menu Store
 const MenuStore = useMenuStore();
 const { ShowLeaveWarn } = storeToRefs(MenuStore);
 
-onMounted(() => {
+//Palette Store
+const ColorPaletteStore = useColorPaletteStore();
+const { NextPalette } = ColorPaletteStore;
+
+//Index Store
+const IndexStore = useIndexStore();
+const { NextIndex, ClearIndexFill } = IndexStore;
+
+//Cell Store
+const CellStore = useCellStore();
+const { NextCellContent } = CellStore;
+
+//Board Store
+const BoardStore = useBoardStore();
+const { ClearBoard } = BoardStore;
+
+//Add warning on leaving
+function LeaveWarn() {
   if (!ShowLeaveWarn.value) return;
   window.onbeforeunload = function () {
     return 'Are you sure you want to leave?';
   };
+}
+
+onMounted(() => {
+  // eslint-disable-next-line no-unused-vars
+  const Shortcuts = [
+    new ShortcutManager('Alt', 'P', () => {
+      NextPalette();
+      ToastTrigger('#PaletteChanged');
+    }),
+    new ShortcutManager('Alt', 'O', () => {
+      NextIndex();
+      ToastTrigger('#IndexChanged');
+    }),
+    new ShortcutManager('Alt', 'Z', () => {
+      NextCellContent();
+      ToastTrigger('#CellContentChanged');
+    }),
+    new ShortcutManager('Alt', 'C', () => {
+      ToastTrigger('#ClearBoard');
+    }),
+    new ShortcutManager('Alt', '/', () => {
+      ClearBoard();
+    }),
+    new ShortcutManager('Alt', 'V', () => {
+      ToastTrigger('#ClearIndex');
+    }),
+    new ShortcutManager('Alt', ',', () => {
+      ClearIndexFill();
+    }),
+  ];
+  LeaveWarn();
 });
 
-//Provide function for triggering toasts
-provide('ToastTrigger', (querry, options = {
+function ToastTrigger(querry, options = {
   animation: true,
   autohide: true,
   delay: 5000
-}) => {
+}) {
   const toastElList = document.querySelectorAll(querry);
   const toastList = [...toastElList].map(toastEl => new Toast(toastEl, options));
 
   toastList.forEach(toast => {
     toast.show();
   });
-});
+}
+
+//Provide function for triggering toasts
+provide('ToastTrigger', ToastTrigger);
 
 </script>
 

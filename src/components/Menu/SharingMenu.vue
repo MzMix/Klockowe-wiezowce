@@ -38,7 +38,7 @@ function SaveBoard(includeTitle = true) {
 <template>
     <div class="text-center p-2 w-100 ps-3">
 
-        <h3 class="mt-2 mb-4">Udostępnianie <i class="bi bi-share"></i></h3>
+        <h4 class="mt-2 mb-4">Udostępnianie <i class="bi bi-share"></i></h4>
 
         <ExportColorPalettes />
 

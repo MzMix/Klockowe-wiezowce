@@ -5,16 +5,26 @@ import bsToast from '@Toast/bsToast.vue';
 // import { inject, onMounted } from 'vue';
 
 //Import Stores
+import { useColorPaletteStore } from "@Stores/ColorPaletteStore";
 import { useBoardStore } from "@Stores/BoardStore";
 import { useIndexStore } from "@Stores/IndexStore";
+import { useCellStore } from "@Stores/CellStore";
 
 //Index
 const IndexStore = useIndexStore();
-const { ClearIndexFill } = IndexStore;
+const { ClearIndexFill, GetSelectedIndexTypeName } = IndexStore;
 
 //Board Store
 const BoardStore = useBoardStore();
 const { ClearBoard } = BoardStore;
+
+//Color & Palette
+const ColorPaletteStore = useColorPaletteStore();
+const { GetSelectedPaletteName } = ColorPaletteStore;
+
+//CellStore
+const CellStore = useCellStore();
+const { GetSelectedCellTypeName } = CellStore;
 
 //For designing Toasts
 // const ShowToast = inject('ToastTrigger');
@@ -27,6 +37,7 @@ const { ClearBoard } = BoardStore;
     
 <template>
 
+    <!-- Color Palette Added -->
     <div aria-live="polite" aria-atomic="true" id="ToastGroup">
         <div class="toast-container bottom-0 end-0 p-3">
 
@@ -40,6 +51,7 @@ const { ClearBoard } = BoardStore;
         </div>
     </div>
 
+    <!-- Clear Board -->
     <div aria-live="polite" aria-atomic="true" id="ToastGroup">
         <div class="toast-container bottom-0 end-0 p-3">
 
@@ -58,6 +70,7 @@ const { ClearBoard } = BoardStore;
         </div>
     </div>
 
+    <!-- Clear Index -->
     <div aria-live="polite" aria-atomic="true" id="ToastGroup">
         <div class="toast-container bottom-0 end-0 p-3">
 
@@ -73,6 +86,48 @@ const { ClearBoard } = BoardStore;
 
                     </div>
                 </template>
+            </bsToast>
+
+        </div>
+    </div>
+
+    <!-- PaletteChanged -->
+    <div aria-live="polite" aria-atomic="true" id="ToastGroup">
+        <div class="toast-container bottom-0 end-0 p-3">
+
+            <bsToast Theme="info" Name="PaletteChanged">
+                <template #header>Zmieniono wybraną paletę kolorów!</template>
+                <template #time>Teraz</template>
+                <template #body>Wybrana paleta:
+                    <strong>{{GetSelectedPaletteName()}}</strong></template>
+            </bsToast>
+
+        </div>
+    </div>
+
+    <!-- IndexChanged -->
+    <div aria-live="polite" aria-atomic="true" id="ToastGroup">
+        <div class="toast-container bottom-0 end-0 p-3">
+
+            <bsToast Theme="info" Name="IndexChanged">
+                <template #header>Zmieniono opis pól!</template>
+                <template #time>Teraz</template>
+                <template #body>Wybrana paleta:
+                    <strong>{{GetSelectedIndexTypeName()}}</strong></template>
+            </bsToast>
+
+        </div>
+    </div>
+
+    <!-- CellContentChanged -->
+    <div aria-live="polite" aria-atomic="true" id="ToastGroup">
+        <div class="toast-container bottom-0 end-0 p-3">
+
+            <bsToast Theme="info" Name="CellContentChanged">
+                <template #header>Zmieniono zawartość pól!</template>
+                <template #time>Teraz</template>
+                <template #body>Wybrana paleta:
+                    <strong>{{GetSelectedCellTypeName()}}</strong></template>
             </bsToast>
 
         </div>
