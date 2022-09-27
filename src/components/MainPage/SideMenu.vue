@@ -2,6 +2,7 @@
 import SettingsMenu from '@Menu/SettingsMenu.vue';
 import DrawingMenu from '@Menu/DrawingMenu.vue';
 import SharingMenu from '@Menu/SharingMenu.vue';
+import ShortcutMenu from '@Menu/ShortcutMenu.vue';
 
 import { useMenuStore } from "@Stores/MenuStore";
 import { storeToRefs } from 'pinia';
@@ -17,6 +18,7 @@ const { MenuOpened } = storeToRefs(MenuStore);
             <DrawingMenu v-if="MenuOpened == 0" class="position-absolute" />
             <SharingMenu v-else-if="MenuOpened == 1" class="position-absolute" />
             <SettingsMenu v-else-if="MenuOpened == 2" class="position-absolute" />
+            <ShortcutMenu v-else-if="MenuOpened == 3" class="position-absolute" />
         </Transition>
 
     </div>

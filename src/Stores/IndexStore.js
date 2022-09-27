@@ -37,6 +37,15 @@ export const useIndexStore = defineStore('IndexManager', () => {
         return IndexFill.value[i];
     }
 
+    function NextIndex() {
+        let value = (SelectedIndexContentType.value + 1) % IndexContentTypes.value.length;
+        SetIndexContentType(value);
+    }
+
+    function GetSelectedIndexTypeName() {
+        return IndexContentTypes.value[SelectedIndexContentType.value].text;
+    }
+
     return {
         IndexContentTypes,
         SelectedIndexContentType,
@@ -45,7 +54,10 @@ export const useIndexStore = defineStore('IndexManager', () => {
         SetIndexContentType,
         SaveToIndexFill,
         ClearIndexFill,
-        GetIndexValue
+        GetIndexValue,
+        
+        NextIndex,
+        GetSelectedIndexTypeName
     };
 
 });

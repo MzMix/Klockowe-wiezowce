@@ -7,7 +7,7 @@ const { SwitchMenu } = MenuStore;
 
 const TopBarElement = "align-self-center fs-4";
 
-const icons = ['brush', 'share', 'gear'];
+const icons = ['brush', 'share', 'gear', 'keyboard'];
 
 </script>
 

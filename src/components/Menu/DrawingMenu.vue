@@ -36,7 +36,7 @@ const ShowToast = inject('ToastTrigger');
 <template>
 
     <div class="text-center p-2 w-100 ps-3">
-        <h3 class="mt-2 mb-4">Rysowanie <i class="bi bi-brush"></i></h3>
+        <h4 class="mt-2 mb-4">Rysowanie <i class="bi bi-brush"></i></h4>
 
         <!-- Switch cell content -->
 
